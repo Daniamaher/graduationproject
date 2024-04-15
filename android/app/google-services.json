@@ -1,0 +1,33 @@
+{
+  "project_info": {
+    "project_number": "208407512848",
+    "project_id": "easeyourunilife",
+    "storage_bucket": "easeyourunilife.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:208407512848:android:17bef8e3e9c0e1ec404795",
+        "android_client_info": {
+          "package_name": "com.example.flutter_application_1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCAR2lKBF1dP0NZFHBvf1cE21o2r87GBhQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      },
+      "appcheck_config": {
+        "device_token_ttl": "604800s",
+        "app_check_token_ttl": "3600s"
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
