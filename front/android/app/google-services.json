@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "330392533531",
+    "project_id": "unilife-ebad5",
+    "storage_bucket": "unilife-ebad5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:330392533531:android:b638bafcd0af0a571856be",
+        "android_client_info": {
+          "package_name": "com.example.front"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAReMqy_FANp6dbslNTv_FIluHxEGL8cRY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

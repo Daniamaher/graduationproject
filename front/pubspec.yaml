@@ -41,6 +41,11 @@ dependencies:
   google_fonts: ^6.2.1
   image_picker: ^1.0.7
   icon_forest: ^1.1.8
+  firebase_core: ^2.30.1
+  firebase_storage: ^11.7.4
+  firebase_auth: ^4.19.4
+  cloud_firestore: ^4.17.2
+  font_awesome_flutter: ^10.7.0
 
 dev_dependencies:
   flutter_test:
@@ -69,6 +74,8 @@ flutter:
     - images/4.jpg
     - images/t4.jpg
     - images/g2.jpg
+    - images/imageicon.png
+    
 
   #   - images/a_dot_ham.jpeg
 
