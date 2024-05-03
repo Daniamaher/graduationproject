@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'Teacher.dart';
+import 'tout.dart';
+
 
 class BookmarkedTeachersPage extends StatelessWidget {
   final List<Teacher> bookmarkedTeachers;

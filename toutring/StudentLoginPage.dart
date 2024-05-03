@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_application_1/Housing/pages/widgets/customTextField.dart';
+import 'package:flutter_application_1/constant.dart';
+
+import 'profile.dart';
+import 'thechornotScreen.dart';
 
 
 class StudentLoginPage extends StatefulWidget {

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
+import 'Teacher.dart';
+import 'c.dart';
 import 'fav.dart';
+import 'tout.dart';
 
 class MultiChoiceFilterPage extends StatefulWidget {
   @override
