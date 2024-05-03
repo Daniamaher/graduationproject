@@ -42,7 +42,7 @@ class _TeachOrNotScreenState extends State<TeachOrNotScreen> {
         };
       });
 
-      FirebaseFirestore.instance.collection('users').doc(widget.userId).update({
+      FirebaseFirestore.instance.collection('user').doc(widget.userId).update({
         'wantsToTeach': _wantsToTeach,
         'subjectsToTeach': _wantsToTeach ? subjectsData : FieldValue.delete(),
       }).then((value) {

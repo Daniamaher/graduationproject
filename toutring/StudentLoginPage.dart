@@ -66,7 +66,7 @@ class _StudentLoginPageState extends State<StudentLoginPage> {
                       try {
                         // Fetch the 'users' collection from Firestore
                         var querySnapshot = await FirebaseFirestore.instance
-                            .collection('users')
+                            .collection('user')
                             .get();
 
                         // Iterate over each document in the collection
@@ -95,7 +95,7 @@ class _StudentLoginPageState extends State<StudentLoginPage> {
                               // Update the 'firstlogon' field in Firestore only if firstLogin is true
                               if (FirstLogin) {
                                 FirebaseFirestore.instance
-                                    .collection('users')
+                                    .collection('user')
                                     .doc(emailController.text)
                                     .update({'FirstLogin': false}).then((_) {
                                   print(

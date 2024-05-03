@@ -799,7 +799,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Future<String> _getDefaultImage() async {
     final docRef =
-        FirebaseFirestore.instance.collection('users').doc(widget.userId);
+        FirebaseFirestore.instance.collection('user').doc(widget.userId);
     final snapshot = await docRef.get();
 
     if (snapshot.exists) {
@@ -822,7 +822,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       final imageProfile = await storageRef.getDownloadURL();
 
       final userRef =
-          FirebaseFirestore.instance.collection('users').doc(widget.userId);
+          FirebaseFirestore.instance.collection('user').doc(widget.userId);
       await userRef.update({'imageProfile': imageProfile});
     }
   }
@@ -860,7 +860,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       backgroundColor: Color(0xFFE6F3F3),
       body: FutureBuilder<DocumentSnapshot>(
         future: FirebaseFirestore.instance
-            .collection('users')
+            .collection('user')
             .doc(widget.userId)
             .get(),
         builder: (context, snapshot) {

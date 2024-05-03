@@ -14,7 +14,7 @@ class UserProfilePage extends StatelessWidget {
       ),
       body: FutureBuilder<DocumentSnapshot>(
         future:
-            FirebaseFirestore.instance.collection('users').doc(userId).get(),
+            FirebaseFirestore.instance.collection('user').doc(userId).get(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(

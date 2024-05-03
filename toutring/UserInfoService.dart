@@ -1,12 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserInfoService {
-  final CollectionReference _users =
-      FirebaseFirestore.instance.collection('users');
+  final CollectionReference _user =
+      FirebaseFirestore.instance.collection('user');
 
   Future<Object?> getUserInfo(String studentNumber) async {
     try {
-      final DocumentSnapshot document = await _users.doc(studentNumber).get();
+      final DocumentSnapshot document = await _user.doc(studentNumber).get();
       if (document.exists) {
         return document.data();
       } else {
