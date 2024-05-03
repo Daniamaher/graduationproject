@@ -6,9 +6,10 @@ import 'package:front/components/nav.dart';
 import 'package:front/fav.dart';
 import 'package:front/firebase_options.dart';
 import 'package:front/home.dart';
-
+import 'package:front/StudentLoginPage.dart';
 import 'package:front/profile.dart';
 import 'package:front/s.dart';
+import 'package:front/thechornotScreen.dart';
 import 'package:front/tout.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -33,17 +34,21 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       // home: FormPage1(),
-      initialRoute: 'Home',
+      initialRoute: "StudentLoginPage",
 
       routes: {
         'FormPage1': (context) => FormPage1(),
-        'FormPage2': (context) => FormPage2(),
-        'ProfileScreen': (context) => ProfileScreen(),
+        //'FormPage2': (context) => FormPage2(),
+        'ProfileScreen': (context) => ProfileScreen(
+              userId: '',
+            ),
         'BookmarkedTeachersPage': (context) => BookmarkedTeachersPage(
               bookmarkedTeachers: [],
             ),
         'MultiChoiceFilterPage': (context) => MultiChoiceFilterPage(),
         "Home": (context) => Home(),
+        "StudentLoginPage": (context) => const StudentLoginPage(),
+        //"HousingPage": (context) => HousingPage()
       },
     );
   }
