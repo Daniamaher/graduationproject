@@ -1,77 +1,4 @@
 
-/*
-class housecards extends StatelessWidget {
-  const housecards({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      margin: EdgeInsets.symmetric(vertical: 8.0),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Row(
-          children: [
-            Image.asset(
-              'images/house.jpg',
-              width: 150,
-              height: 150, 
-            ),
-            SizedBox(width: 20),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8.0),
-                    child: Text(
-                      'title',
-                      style: TextStyle(
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 4.0),
-                  Text(
-                    'price',
-                    style: TextStyle(
-                      fontSize: 14.0, color: Colors.yellow
-                    ),
-                  ),
-                  const SizedBox(height: 8.0),
-                  Row(
-                    children: [
-                      Icon(Icons.people), 
-                      SizedBox(width: 4.0),
-                      Text(
-                        "4", 
-                        style: TextStyle(fontSize: 14.0), 
-                      ),
-                      SizedBox(width: 16.0),
-                      Icon(Icons.home), 
-                      SizedBox(width: 4.0),
-                      Text(
-                        "3", 
-                        style: TextStyle(fontSize: 14.0), 
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-*/
-
-
-
-
 
 
 
@@ -91,12 +18,13 @@ class housecards extends StatelessWidget {
 
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_application_1/Housing/myhouse.dart';
 import 'package:flutter_application_1/Housing/pages/addhousepage.dart';
 import 'package:flutter_application_1/Housing/pages/housedetailspage.dart';
+import 'package:flutter_application_1/toutring/StudentLoginPage.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:flutter/material.dart';
-
 
 
 
@@ -279,6 +207,23 @@ class HousingPage extends StatelessWidget {
               );
             },
           ),
+
+
+            IconButton(
+            icon: const Icon(Icons.home),
+            tooltip: 'My House',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute<void>(
+                  builder: (BuildContext context) {
+                    return MyHousingPage();
+                  },
+                ),
+              );
+            },
+          ),
+
         ],
       ),
       body: Padding(
