@@ -11,7 +11,7 @@
 
 
 
-
+/*
 
 
 
@@ -25,6 +25,279 @@ import 'package:flutter_application_1/toutring/StudentLoginPage.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:flutter/material.dart';
+
+
+
+
+
+
+
+class HousingPage extends StatelessWidget {
+  const HousingPage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: Text('Houses'),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.add),
+            tooltip: 'Add House',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute<void>(
+                  builder: (BuildContext context) {
+                    return AddHousePage();
+                  },
+                ),
+              );
+            },
+          ),
+           IconButton(
+            icon: const Icon(Icons.home),
+            tooltip: 'My House',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute<void>(
+                  builder: (BuildContext context) {
+                    return MyHousingPage();
+                  },
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(15),
+        child: StreamBuilder<QuerySnapshot>(
+          stream: firestore.collectionGroup('houses').snapshots(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            }
+
+            if (snapshot.hasError) {
+              return Center(child: Text('Error: ${snapshot.error}'));
+            }
+
+            final List<DocumentSnapshot> houseDocs = snapshot.data!.docs;
+            return GridView.builder(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 1, 
+              ),
+              itemCount: houseDocs.length, 
+              itemBuilder: (context, index) {
+                final houseData = houseDocs[index].data() as Map<String, dynamic>;
+                return HouseItem(
+                  houseName: houseData['houseName'] ?? '',
+                  housePrice: houseData['price'] ?? '',
+                  occupants: int.tryParse(houseData['numOccupants'].toString()) ?? 0,
+                  rooms: int.tryParse(houseData['numRooms'].toString()) ?? 0,
+                );
+              },
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
+
+
+class HouseItem extends StatelessWidget {
+  final String houseName;
+  final String housePrice;
+  final int occupants;
+  final int rooms;
+
+  const HouseItem({
+    required this.houseName,
+    required this.housePrice,
+    required this.occupants,
+    required this.rooms,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 4,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+           Image.asset(
+              'images/house.jpg',
+              width: 440,
+              height: 200, 
+            ),
+          
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  houseName,
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 4),
+                Text(
+                  'Price: $housePrice',
+                  style: TextStyle(color: Colors.yellow),
+                ),
+                SizedBox(height: 4),
+                Row(
+                  children: [
+                    Icon(Icons.people),
+                    SizedBox(width: 4),
+                    Text('Occupants: $occupants'),
+                  ],
+                ),
+                SizedBox(height: 4),
+                Row(
+                  children: [
+                    Icon(Icons.home),
+                    SizedBox(width: 4),
+                    Text('Rooms: $rooms'),
+                   SizedBox(width: 8),
+
+                      IconButton(
+      icon: FaIcon(FontAwesomeIcons.toilet,
+      color:  Colors.black,size: 20,), 
+      onPressed: () {  }
+     ),
+                    SizedBox(width: 4),
+                    Text('bathroom $rooms'),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+
+
+
+
+
+
+
+**/
+
+
+
+/*
+class housecards extends StatelessWidget {
+  const housecards({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: EdgeInsets.symmetric(vertical: 8.0),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          children: [
+            Image.asset(
+              'images/house.jpg',
+              width: 150,
+              height: 150, 
+            ),
+            SizedBox(width: 20),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: Text(
+                      'title',
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 4.0),
+                  Text(
+                    'price',
+                    style: TextStyle(
+                      fontSize: 14.0, color: Colors.yellow
+                    ),
+                  ),
+                  const SizedBox(height: 8.0),
+                  Row(
+                    children: [
+                      Icon(Icons.people), 
+                      SizedBox(width: 4.0),
+                      Text(
+                        "4", 
+                        style: TextStyle(fontSize: 14.0), 
+                      ),
+                      SizedBox(width: 16.0),
+                      Icon(Icons.home), 
+                      SizedBox(width: 4.0),
+                      Text(
+                        "3", 
+                        style: TextStyle(fontSize: 14.0), 
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_application_1/Housing/myhouse.dart';
+import 'package:flutter_application_1/Housing/pages/addhousepage.dart';
+import 'package:flutter_application_1/Housing/pages/housedetailspage.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import 'package:flutter/material.dart';
+
 
 
 
@@ -207,11 +480,9 @@ class HousingPage extends StatelessWidget {
               );
             },
           ),
-
-
-            IconButton(
+          IconButton(
             icon: const Icon(Icons.home),
-            tooltip: 'My House',
+            tooltip: 'my House',
             onPressed: () {
               Navigator.push(
                 context,
@@ -223,7 +494,6 @@ class HousingPage extends StatelessWidget {
               );
             },
           ),
-
         ],
       ),
       body: Padding(
@@ -379,5 +649,4 @@ class HouseItem extends StatelessWidget {
     );
   }
 }
-
 

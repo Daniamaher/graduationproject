@@ -24,30 +24,25 @@ class _HouseOwnerLoginPageState extends State<HouseOwnerLoginPage> {
         return;
       }
 
-      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+      UserCredential userCredential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
       );
-      
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Login Successful'),
-        ),
 
+      User? user = userCredential.user;
 
-
-      );
-
-
-
-     Navigator.push(
-                context,
-                MaterialPageRoute<void>(
-                  builder: (BuildContext context) {
-                    return HousingPage();
-                  },
-                ),
-              );
+      await user!.reload(); 
+      if (user.emailVerified) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (BuildContext context) {
+            return HousingPage();
+          }),
+        );
+      } else {
+        showErrorDialog('Email is not verified. Please verify your email.');
+      }
     } on FirebaseAuthException catch (e) {
       setState(() {
         if (e.code == 'user-not-found') {
@@ -139,46 +134,9 @@ class _HouseOwnerLoginPageState extends State<HouseOwnerLoginPage> {
                   ),
                 ),
               ),
+              SizedBox(height:20), 
 
-
-
-
-           SizedBox(height:20),
-/*
               Center(
-                child: SizedBox(
-                  width: 170,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.symmetric(vertical: 16),
-                    ),
-                    onPressed: () {
-
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>HouseOwnerRegistrationPage()));
-                    },
-                    child: Text(
-                      'Register',
-                      style: TextStyle(
-                        color: kPrimaryColor,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-*/
-
-                 
-
-
-               
-                 
-
-
-
-
-                  Center(
                 child: Text(
                   "Don't have an account?",
                   style: TextStyle(color: Colors.white),
@@ -199,10 +157,6 @@ class _HouseOwnerLoginPageState extends State<HouseOwnerLoginPage> {
                   ),
                 ),
               ),
-
-
-
-
             ],
           ),
         ),
@@ -210,3 +164,4 @@ class _HouseOwnerLoginPageState extends State<HouseOwnerLoginPage> {
     );
   }
 }
+

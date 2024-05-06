@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_application_1/Housing/pages/HouseOwnerRegistrationPage.dart';
+import 'package:flutter_application_1/Housing/pages/houseownerloginpage.dart';
 import 'StudentLoginPage.dart';
 import 'fav.dart';
 import 'firebase_options.dart';
@@ -29,7 +31,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       // home: FormPage1(),
-      initialRoute: "StudentLoginPage",
+      initialRoute: "HouseOwnerLoginPage",
 
       routes: {
         'FormPage1': (context) => FormPage1(),
@@ -44,6 +46,7 @@ class MyApp extends StatelessWidget {
         "Home": (context) => Home(),
         "StudentLoginPage": (context) => const StudentLoginPage(),
         //"HousingPage": (context) => HousingPage()
+        "HouseOwnerLoginPage": (context) => const HouseOwnerLoginPage(),
       },
     );
   }

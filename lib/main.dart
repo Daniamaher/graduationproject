@@ -7,6 +7,12 @@ import 'package:flutter_application_1/Housing/pages/housedetailspage.dart';
 import 'package:flutter_application_1/Housing/pages/houseownerloginpage.dart';
 import 'package:flutter_application_1/Housing/pages/HouseOwnerRegistrationPage.dart';
 import 'package:flutter_application_1/Housing/pages/HousesPage.dart';
+import 'package:flutter_application_1/toutring/StudentLoginPage.dart';
+import 'package:flutter_application_1/toutring/fav.dart';
+import 'package:flutter_application_1/toutring/firstpage.dart';
+import 'package:flutter_application_1/toutring/home.dart';
+import 'package:flutter_application_1/toutring/profile.dart';
+import 'package:flutter_application_1/toutring/s.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_application_1/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -41,6 +47,17 @@ class MyApp extends StatelessWidget {
         '/houses': (context) => HousingPage(),
         '/addHouse': (context) => AddHousePage(),
         '/HouseDetailsPage': (context) => DisplayHouseDetailPage(houseDetails: HouseDetails.defaultData()),
+                    '/Home': (context) => Home(),
+                     'FormPage1': (context) => FormPage1(),
+        //'FormPage2': (context) => FormPage2(),
+        'ProfileScreen': (context) => ProfileScreen(
+              userId: '',
+            ),
+        'BookmarkedTeachersPage': (context) => BookmarkedTeachersPage(
+              bookmarkedTeachers: [],
+            ),
+        'MultiChoiceFilterPage': (context) => MultiChoiceFilterPage(),
+        "StudentLoginPage": (context) => const StudentLoginPage(),
 
       },
     );
