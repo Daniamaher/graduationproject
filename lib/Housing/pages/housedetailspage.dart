@@ -8,13 +8,13 @@ import 'package:flutter_application_1/constant.dart';
 
 class HouseDetails {
   final String houseName;
-  final String housePrice;
+  final double housePrice;
   final int occupants;
   final int rooms;
   final List<String> imageUrls;
   final String gender;
   final String email;
-  final String bathrooms;
+  final int  bathrooms;
   final String userId;
 
   HouseDetails({
@@ -38,12 +38,12 @@ class HouseDetails {
         'https://via.placeholder.com/300',
       ],
       occupants: 4,
-      bathrooms: '2',
+      bathrooms: 2,
       rooms: 3,
       gender: 'Any',
       email: 'example@example.com',
       userId: 'defaultUserId',
-      housePrice: 'price',
+      housePrice: 0,
     );
   }
 }

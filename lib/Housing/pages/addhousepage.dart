@@ -284,7 +284,7 @@ class _AddHousePageState extends State<AddHousePage> {
           print('File does not exist: $imagePath');
         }
       }
-
+     /*
       final houseData = {
         'userId': user.uid,
         'houseName': houseNameController.text,
@@ -296,6 +296,19 @@ class _AddHousePageState extends State<AddHousePage> {
         'email': emailController.text,
         'imageUrls': uploadedImageUrls,
       };
+       */
+
+      final houseData = {
+  'userId': user.uid,
+  'houseName': houseNameController.text,
+  'price': double.parse(priceController.text),
+  'numRooms': int.parse(numRoomsController.text),
+  'numBathrooms': int.parse(numBathroomsController.text),
+  'gender': _selectedGender,
+  'numOccupants': int.parse(numOccupantsController.text),
+  'email': emailController.text,
+  'imageUrls': uploadedImageUrls,
+};
 
       await firestoreService.addHouse(user.uid, houseData);
       Navigator.pop(context);

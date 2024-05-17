@@ -18,6 +18,7 @@ import 'package:flutter_application_1/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:flutter_application_1/Housing/pages/Services/FirestoreService.dart';
+import 'package:flutter_application_1/Housing/pages/HousesPage.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -40,13 +41,12 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      initialRoute: '/houseownerlogin',
+      initialRoute: '/houses',
       routes: {
-        '/houseownerlogin': (context) => HouseOwnerLoginPage(),
-        '/houseownerregister': (context) => HouseOwnerRegistrationPage(),
+        //'/houseownerlogin': (context) => HouseOwnerLoginPage(),
+        '/houseownerregister': (context) => HouseOwnerRegistrationPage (),
         '/houses': (context) => HousingPage(),
         '/addHouse': (context) => AddHousePage(),
-        '/HouseDetailsPage': (context) => DisplayHouseDetailPage(houseDetails: HouseDetails.defaultData()),
                     '/Home': (context) => Home(),
                      'FormPage1': (context) => FormPage1(),
         //'FormPage2': (context) => FormPage2(),
