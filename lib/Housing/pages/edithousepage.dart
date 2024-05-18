@@ -35,7 +35,7 @@ class _EditHousePageState extends State<EditHousePage> {
   void initState() {
     super.initState();
     houseNameController.text = widget.houseData['houseName'];
-    priceController.text = widget.houseData['price'];
+    priceController.text = widget.houseData['price'].toDouble;
     numRoomsController.text = widget.houseData['numRooms'];
     numBathroomsController.text = widget.houseData['numBathrooms'];
    _selectedGender = widget.houseData['gender'];

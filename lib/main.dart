@@ -36,9 +36,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      initialRoute: 'houses',
+      initialRoute: 'houseownerloginpage',
       routes: {
-         // 'houseownerloginpage': (context) => HouseOwnerLoginPage(),
+          'houseownerloginpage': (context) => HouseOwnerLoginPage(),
 
         'houseownerregister': (context) => HouseOwnerRegistrationPage (),
         'houses': (context) => HousingPage(),
