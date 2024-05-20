@@ -24,19 +24,13 @@ class _EditHousePageState extends State<EditHousePage> {
   final TextEditingController priceController = TextEditingController();
   final TextEditingController numRoomsController = TextEditingController();
   final TextEditingController numBathroomsController = TextEditingController();
-  final TextEditingController genderController = TextEditingController();
   final TextEditingController numOccupantsController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
 
   List<String> imageUrls = [];
   String? _selectedGender;
 
-
-
-
-
-
-@override
+  @override
   void initState() {
     super.initState();
     houseNameController.text = widget.houseData['houseName'];
@@ -53,6 +47,7 @@ class _EditHousePageState extends State<EditHousePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+      
         title: Text('Edit House'),
       ),
       body: SingleChildScrollView(
@@ -60,116 +55,109 @@ class _EditHousePageState extends State<EditHousePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+          
+            SizedBox(height: 8),
             CustomTextField(
-              hint: 'House Name',
+              label: 'House Name',
+              hint: 'Enter House Name',
               controller: houseNameController,
             ),
             SizedBox(height: 20),
+         
+            SizedBox(height: 8),
             CustomTextField(
-              hint: 'Price',
+              label: 'Price',
+              hint: 'Enter Price',
               controller: priceController,
             ),
             SizedBox(height: 20),
+         
+            SizedBox(height: 8),
             CustomTextField(
-              hint: 'Number of Rooms',
+              label: 'Number of Rooms',
+              hint: 'Enter Number of Rooms',
               controller: numRoomsController,
             ),
             SizedBox(height: 20),
+           
+            SizedBox(height: 8),
             CustomTextField(
-              hint: 'Number of Bathrooms',
+              label: 'Number of Bathrooms',
+              hint: 'Enter Number of Bathrooms',
               controller: numBathroomsController,
             ),
             SizedBox(height: 20),
-            /*
-            CustomTextField(
-              hint: 'Gender',
-              controller: genderController,
-            ),*/
+           
+            SizedBox(height: 8),
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: Colors.white,
+                border: Border.all(color: kPrimaryColor),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: DropdownButtonFormField<String>(
+                  icon: Icon(Icons.arrow_drop_down),
+                  iconSize: 40,
+                  elevation: 16,
+                  hint: Text('Select Gender'),
+                  value: _selectedGender ?? widget.houseData['gender'],
+                  onChanged: (value) {
+                    setState(() {
+                      _selectedGender = value;
+                    });
+                  },
+                  items: [
+                    DropdownMenuItem(
+                      value: 'female',
+                      child: Text('Female', style: TextStyle(color: const Color.fromARGB(255, 98, 97, 97))),
+                    ),
+                    DropdownMenuItem(
+                      value: 'male',
+                      child: Text('Male', style: TextStyle(color: const Color.fromARGB(255, 98, 97, 97))),
+                    ),
+                    DropdownMenuItem(
+                      value: 'male and female',
+                      child: Text('Male and Female', style: TextStyle(color: const Color.fromARGB(255, 98, 97, 97))),
+                    ),
+                  ],
+                ),
+              ),
+            ),
             SizedBox(height: 20),
+           
+            SizedBox(height: 8),
             CustomTextField(
-              hint: 'Number of Occupants',
+              label: 'Number of Occupants',
+              hint: 'Enter Number of Occupants',
               controller: numOccupantsController,
             ),
             SizedBox(height: 20),
+          
+            SizedBox(height: 8),
             CustomTextField(
-              hint: 'Contact Email',
+              label: 'Contact Email',
+              hint: 'Enter Contact Email',
               controller: emailController,
             ),
             SizedBox(height: 20),
-           /* ElevatedButton(
-              onPressed: _pickImages,
-              child: Text('Add Images'),
-            ),
-*/
-
-
-
-                Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            color: Colors.white,
-            border: Border.all(color: kPrimaryColor),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: DropdownButtonFormField<String>(
-        icon: Icon(Icons.arrow_drop_down),
-        iconSize: 40,
-        elevation: 16,
-        hint: Text('Select Gender'),
-        value: _selectedGender ?? widget.houseData['gender'],
-        onChanged: (value) {
-          setState(() {
-            _selectedGender = value;
-          });
-        },
-        items: [
-          DropdownMenuItem(
-            value: 'female',
-            child: Text('Female', style: TextStyle(color: const Color.fromARGB(255, 98, 97, 97))),
-          ),
-          DropdownMenuItem(
-            value: 'male',
-            child: Text('Male',style: TextStyle(color: const Color.fromARGB(255, 98, 97, 97))),
-          ),
-          DropdownMenuItem(
-            value: 'male and female',
-            child: Text('Male and female' ,style: TextStyle(color: const Color.fromARGB(255, 98, 97, 97))),
-          ),
-        ],
-            ),
-          ),
-        ),
-        
-        SizedBox(height: 20,),
-        /*
-           ElevatedButton(
-                  onPressed: _pickImages,
-                  child: Text('Add Images'),
-                ),*/
-        
-              
-        
-                  Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: MaterialButton(
-                    onPressed:_pickImages,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.upload_outlined),
-                        SizedBox(width: 2),
-                        Text('Upload Image'),
-                      ],
-                    ),
-                  ),
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: MaterialButton(
+                onPressed: _pickImages,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.upload_outlined),
+                    SizedBox(width: 2),
+                    Text('Upload Image'),
+                  ],
                 ),
-        
-
-
-
+              ),
+            ),
             SizedBox(height: 20),
             if (imageUrls.isNotEmpty)
               SizedBox(
@@ -224,7 +212,7 @@ class _EditHousePageState extends State<EditHousePage> {
           File imageFile = File(image.path);
           String uploadedImageUrl = await _uploadImage(imageFile);
           setState(() {
-            imageUrls.add(uploadedImageUrl); 
+            imageUrls.add(uploadedImageUrl);
           });
         }
       } catch (error) {
@@ -244,7 +232,7 @@ class _EditHousePageState extends State<EditHousePage> {
       Reference storageReference = FirebaseStorage.instance.ref().child('images/$fileName');
       await storageReference.putFile(imageFile);
       String downloadUrl = await storageReference.getDownloadURL();
-      return downloadUrl; 
+      return downloadUrl;
     } catch (error) {
       print('Error uploading image: $error');
       throw error;
@@ -260,28 +248,17 @@ class _EditHousePageState extends State<EditHousePage> {
   void _saveChanges() async {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      try {/*
+      try {
         final updatedHouseData = {
           'houseName': houseNameController.text,
-          'price': priceController.text,
-          'numRooms': numRoomsController.text,
-          'numBathrooms': numBathroomsController.text,
-          'gender': _selectedGender,
-          'numOccupants': numOccupantsController.text,
+          'price': double.tryParse(priceController.text) ?? 0.0,
+          'numRooms': int.tryParse(numRoomsController.text) ?? 0,
+          'numBathrooms': int.tryParse(numBathroomsController.text) ?? 0,
+          'gender': _selectedGender ?? '',
+          'numOccupants': int.tryParse(numOccupantsController.text) ?? 0,
           'email': emailController.text,
           'imageUrls': imageUrls,
-        };*/
-
-        final updatedHouseData = {
-  'houseName': houseNameController.text,
-  'price': double.tryParse(priceController.text) ?? 0.0,  // Convert to double
-  'numRooms': int.tryParse(numRoomsController.text) ?? 0, // Convert to int
-  'numBathrooms': int.tryParse(numBathroomsController.text) ?? 0, // Convert to int
-  'gender': _selectedGender ?? '',  // Keep as String
-  'numOccupants': int.tryParse(numOccupantsController.text) ?? 0, // Convert to int
-  'email': emailController.text,
-  'imageUrls': imageUrls,
-};
+        };
 
         final QuerySnapshot querySnapshot = await FirebaseFirestore.instance
             .collection('users')
@@ -321,12 +298,15 @@ class _EditHousePageState extends State<EditHousePage> {
     priceController.dispose();
     numRoomsController.dispose();
     numBathroomsController.dispose();
-    genderController.dispose();
     numOccupantsController.dispose();
     emailController.dispose();
     super.dispose();
   }
 }
+
+
+
+
 
 
 

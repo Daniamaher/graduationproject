@@ -1,13 +1,11 @@
 
-
-
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Housing/myhouse.dart';
 import 'package:flutter_application_1/Housing/pages/addhousepage.dart';
 import 'package:flutter_application_1/Housing/pages/housedetailspage.dart';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_application_1/Housing/pages/houseownerloginpage.dart';
 import 'package:flutter_application_1/constant.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -67,6 +65,21 @@ backgroundColor:Color(0xff0f1035) ,
                 MaterialPageRoute<void>(
                   builder: (BuildContext context) {
                     return AddHousePage();
+                  },
+                ),
+              );
+            },
+          ),
+           IconButton(
+            icon: const Icon(Icons.logout),
+            tooltip: 'Log Out ',
+            onPressed: ()async {
+              await FirebaseAuth.instance.signOut();
+              Navigator.push(
+                context,
+                MaterialPageRoute<void>(
+                  builder: (BuildContext context) {
+                    return HouseOwnerLoginPage();
                   },
                 ),
               );

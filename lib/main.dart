@@ -7,7 +7,6 @@ import 'package:flutter_application_1/Housing/pages/housedetailspage.dart';
 import 'package:flutter_application_1/Housing/pages/houseownerloginpage.dart';
 import 'package:flutter_application_1/Housing/pages/HouseOwnerRegistrationPage.dart';
 import 'package:flutter_application_1/Housing/pages/HousesPage.dart';
-import 'package:flutter_application_1/mah.dart';
 
 import 'package:provider/provider.dart';
 import 'package:flutter_application_1/firebase_options.dart';
@@ -19,9 +18,7 @@ import 'package:flutter_application_1/Housing/pages/HousesPage.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-   /* await FirebaseAppCheck.instance.activate(
-    webRecaptchaSiteKey: 'recaptcha-v3-site-key',
-  );*/
+
 
   runApp(
     MyApp(),
@@ -37,7 +34,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      initialRoute: 'houses',
+      initialRoute: 'houseownerloginpage',
       routes: {
           'houseownerloginpage': (context) => HouseOwnerLoginPage(),
 
@@ -47,7 +44,6 @@ class MyApp extends StatelessWidget {
 
         'HouseDetailsPage': (context) => DisplayHouseDetailPage(houseDetails: HouseDetails.defaultData()),
 
-        'VistingProfileScreen': (context) => VisitingProfileScreen()
 
 
 

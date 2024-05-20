@@ -1,7 +1,4 @@
 
-
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Housing/pages/HousesPage.dart';
 import 'package:flutter_application_1/Housing/pages/verify.dart';
