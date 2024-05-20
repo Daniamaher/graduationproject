@@ -33,7 +33,7 @@ class _HousingPageState extends State<HousingPage> {
       
       appBar: AppBar(
             iconTheme: IconThemeData(color: Colors.white),
-backgroundColor: kPrimaryColor,
+backgroundColor:Color(0xff0f1035) ,
         title: Text('Houses',style: TextStyle(color: Colors.white),),
         actions: <Widget>[
 

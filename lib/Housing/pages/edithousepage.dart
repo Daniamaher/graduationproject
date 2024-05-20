@@ -31,15 +31,20 @@ class _EditHousePageState extends State<EditHousePage> {
   List<String> imageUrls = [];
   String? _selectedGender;
 
-  @override
+
+
+
+
+
+@override
   void initState() {
     super.initState();
     houseNameController.text = widget.houseData['houseName'];
-    priceController.text = widget.houseData['price'].toDouble;
-    numRoomsController.text = widget.houseData['numRooms'];
-    numBathroomsController.text = widget.houseData['numBathrooms'];
-   _selectedGender = widget.houseData['gender'];
-    numOccupantsController.text = widget.houseData['numOccupants'];
+    priceController.text = widget.houseData['price'].toString();
+    numRoomsController.text = widget.houseData['numRooms'].toString();
+    numBathroomsController.text = widget.houseData['numBathrooms'].toString();
+    _selectedGender = widget.houseData['gender'];
+    numOccupantsController.text = widget.houseData['numOccupants'].toString();
     emailController.text = widget.houseData['email'];
     imageUrls = List<String>.from(widget.houseData['imageUrls'] ?? []);
   }
@@ -255,7 +260,7 @@ class _EditHousePageState extends State<EditHousePage> {
   void _saveChanges() async {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      try {
+      try {/*
         final updatedHouseData = {
           'houseName': houseNameController.text,
           'price': priceController.text,
@@ -265,7 +270,18 @@ class _EditHousePageState extends State<EditHousePage> {
           'numOccupants': numOccupantsController.text,
           'email': emailController.text,
           'imageUrls': imageUrls,
-        };
+        };*/
+
+        final updatedHouseData = {
+  'houseName': houseNameController.text,
+  'price': double.tryParse(priceController.text) ?? 0.0,  // Convert to double
+  'numRooms': int.tryParse(numRoomsController.text) ?? 0, // Convert to int
+  'numBathrooms': int.tryParse(numBathroomsController.text) ?? 0, // Convert to int
+  'gender': _selectedGender ?? '',  // Keep as String
+  'numOccupants': int.tryParse(numOccupantsController.text) ?? 0, // Convert to int
+  'email': emailController.text,
+  'imageUrls': imageUrls,
+};
 
         final QuerySnapshot querySnapshot = await FirebaseFirestore.instance
             .collection('users')

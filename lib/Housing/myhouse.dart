@@ -144,7 +144,7 @@ class HouseItem extends StatelessWidget {
                 ? Image.network(
                     firstImageUrl,
                     width: double.infinity,
-                    height: 200,
+                    height: 190,
                     fit: BoxFit.cover,
                   )
                 : SizedBox.shrink(),
@@ -179,7 +179,7 @@ class HouseItem extends StatelessWidget {
                       Icon(Icons.home),
                       SizedBox(width: 4),
                       Text('Rooms: $rooms'),
-                      SizedBox(width: 8),
+                      SizedBox(width: 6),
                       IconButton(
                         icon: FaIcon(
                           FontAwesomeIcons.toilet,
@@ -188,10 +188,21 @@ class HouseItem extends StatelessWidget {
                         ),
                         onPressed: () {},
                       ),
-                      SizedBox(width: 4),
-                      Text('bathroom $rooms'),
+                      Text('bathroom $bathrooms'),
                     ],
                   ),
+
+                 
+                  SizedBox(height: 4),
+                  Row(
+                    children: [
+                      Icon(Icons.person_rounded),
+                      SizedBox(width: 4),
+                      Text('gender: $gender'),
+                    ],
+                  ),
+
+
                 ],
               ),
             ),

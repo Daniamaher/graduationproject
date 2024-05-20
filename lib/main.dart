@@ -7,6 +7,7 @@ import 'package:flutter_application_1/Housing/pages/housedetailspage.dart';
 import 'package:flutter_application_1/Housing/pages/houseownerloginpage.dart';
 import 'package:flutter_application_1/Housing/pages/HouseOwnerRegistrationPage.dart';
 import 'package:flutter_application_1/Housing/pages/HousesPage.dart';
+import 'package:flutter_application_1/mah.dart';
 
 import 'package:provider/provider.dart';
 import 'package:flutter_application_1/firebase_options.dart';
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      initialRoute: 'houseownerloginpage',
+      initialRoute: 'houses',
       routes: {
           'houseownerloginpage': (context) => HouseOwnerLoginPage(),
 
@@ -46,8 +47,7 @@ class MyApp extends StatelessWidget {
 
         'HouseDetailsPage': (context) => DisplayHouseDetailPage(houseDetails: HouseDetails.defaultData()),
 
-
-
+        'VistingProfileScreen': (context) => VisitingProfileScreen()
 
 
 
