@@ -65,7 +65,7 @@ class MyApp extends StatelessWidget {
 
          '/StudentLoginPage': (context) => StudentLoginPage(),
         '/ StudentrRegistrationPage': (context) => StudentRegistrationPage(),
-        
+
         '/Home': (context) => Home(),
         'ProfileScreen': (context) => ProfileScreen(),
         'SettingForStudents': (context) => SettingsPage(),
@@ -75,6 +75,7 @@ class MyApp extends StatelessWidget {
         "Fitring": (context) => Fitring(),
         'VerifyStudentScreen' :(context) => VerifyStudentScreen(),
         'TeachOrNotScreen' :(context) => TeachOrNotScreen(),
+        
                       ' AddBookPage' :(context) =>  AddBookPage(),
                       ' DepartmentListPage' :(context) =>  DepartmentListPage(),
 
@@ -87,9 +88,11 @@ class MyApp extends StatelessWidget {
              
 
 
+
       },
     );
   }
+
 
 }
 

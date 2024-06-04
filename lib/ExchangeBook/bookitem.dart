@@ -266,13 +266,19 @@ class BookItem extends StatelessWidget {
   final String bookPrice;
   final List<String>? imageUrls;
   final String? email;
+final String ? bookStatus;
+final String ? additionalDetails;
+ final String ?  bookId;
+ final String? collegeId;
+  final String? departmentId;
+    final String? userId;
 
   BookItem({
     Key? key,
     this.bookName,
     required this.bookPrice,
     this.imageUrls,
-    this.email,
+    this.email,  this.bookStatus,  this.additionalDetails, this.bookId, this.collegeId, this.departmentId, this.userId, 
   }) : super(key: key);
 
   @override
@@ -289,6 +295,12 @@ class BookItem extends StatelessWidget {
         bookPrice: bookPrice,
         imageUrls: imageUrls,
         email: email,
+             additionalDetails:additionalDetails ,
+                          bookStatus: bookStatus,
+                         bookId:bookId,
+ collegeId:collegeId,
+departmentId:departmentId,
+userId: userId,
       ),
     ),
   );

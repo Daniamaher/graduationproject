@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_application_1/ExchangeBook/addbookpage.dart';
 import 'package:flutter_application_1/ExchangeBook/displaybookpage.dart';
-import 'package:flutter_application_1/Housing/myhouse.dart';
 import 'package:flutter_application_1/constant.dart';
 import 'package:flutter_application_1/exchangebook/bookitem.dart';
 
@@ -14,84 +12,15 @@ import 'package:flutter_application_1/exchangebook/bookitem.dart';
 
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-/*correct
-class ExchangeBookPage extends StatelessWidget {
-  final String? collegeId;
-  final String? departmentId;
-
-  const ExchangeBookPage({Key? key, this.collegeId, this.departmentId}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: kPrimaryColor,
-      appBar: AppBar(
-        title: Text('Books in Department'),
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.add),
-            tooltip: 'Add Book',
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute<void>(
-                  builder: (BuildContext context) {
-                    return AddBookPage(collegeId: collegeId, departmentId: departmentId);
-                  },
-                ),
-              );
-            },
-          ),
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(15),
-        child: StreamBuilder<QuerySnapshot>(
-          stream: FirebaseFirestore.instance
-              .collection('Colleges')
-              .doc(collegeId)
-              .collection('Departments')
-              .doc(departmentId)
-              .collection('Books')
-              .snapshots(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator());
-            }
-            if (snapshot.hasError) {
-              return Center(child: Text('Error: ${snapshot.error}'));
-            }
-            final books = snapshot.data!.docs;
-            return Expanded(
-              child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 16,
-                  mainAxisSpacing: 16,
-                ),
-                itemCount: books.length,
-                itemBuilder: (context, index) {
-                  final book = books[index];
-                  List<dynamic> imageUrlsDynamic = book['imageUrls'] ?? [];
-                  List<String> imageUrls = imageUrlsDynamic.map((url) => url.toString()).toList();
-                  return BookItem(
-                    bookName: book['bookName'],
-                    bookPrice: book['bookPrice'],
-                    imageUrls: imageUrls,
-                    email: book['email'],
-                  );
-                },
-              ),
-            );
-          },
-        ),
-      ),
-    );
-  }
-}
+import 'package:flutter_application_1/ExchangeBook/addbookpage.dart';
+import 'package:flutter_application_1/ExchangeBook/displaybookpage.dart';
+import 'package:flutter_application_1/exchangebook/bookitem.dart';
 
 
-*/
+
+
+
+
 
 
 
@@ -107,17 +36,97 @@ class ExchangeBookPage extends StatelessWidget {
 
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-class ExchangeBookPage extends StatelessWidget {
+import 'package:flutter_application_1/ExchangeBook/addbookpage.dart';
+import 'package:flutter_application_1/ExchangeBook/displaybookpage.dart';
+import 'package:flutter_application_1/exchangebook/bookitem.dart';
+/*
+class ExchangeBookPage extends StatefulWidget {
   final String? collegeId;
   final String? departmentId;
 
-  const ExchangeBookPage({Key? key, this.collegeId, this.departmentId}) : super(key: key);
+  ExchangeBookPage({Key? key, this.collegeId, this.departmentId}) : super(key: key);
+
+  @override
+  State<ExchangeBookPage> createState() => _ExchangeBookPageState();
+}
+
+class _ExchangeBookPageState extends State<ExchangeBookPage> {
+  List<QueryDocumentSnapshot<Map<String, dynamic>>> allResults = [];
+  List<QueryDocumentSnapshot<Map<String, dynamic>>> filteredBooks = [];
+  TextEditingController searchController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    getBookStream();
+    searchController.addListener(_onSearchChanged);
+  }
+
+  @override
+  void dispose() {
+    searchController.removeListener(_onSearchChanged);
+    searchController.dispose();
+    super.dispose();
+  }
+
+  _onSearchChanged() {
+    filterBooks();
+  }
+
+  getBookStream() async {
+    try {
+      String? collegeId = widget.collegeId;
+      String? departmentId = widget.departmentId;
+
+      if (collegeId == null || departmentId == null) {
+        print('collegeId or departmentId is null');
+        return;
+      }
+
+      QuerySnapshot<Map<String, dynamic>> data = await FirebaseFirestore.instance
+          .collection('Colleges')
+          .doc(collegeId)
+          .collection('Departments')
+          .doc(departmentId)
+          .collection('Books')
+          .orderBy('bookName')
+          .get();
+      
+      // Debug: Print fetched data
+      data.docs.forEach((doc) => print('Fetched book: ${doc.data()}'));
+
+      setState(() {
+        allResults = data.docs;
+        filteredBooks = allResults;
+      });
+
+      print('Fetched ${data.docs.length} books');
+    } catch (e) {
+      print('Error fetching books: $e');
+    }
+  }
+
+  filterBooks() {
+    List<QueryDocumentSnapshot<Map<String, dynamic>>> results = [];
+    if (searchController.text.isEmpty) {
+      results = allResults;
+    } else {
+      results = allResults
+          .where((book) => book['bookName']
+              .toString()
+              .toLowerCase()
+              .contains(searchController.text.toLowerCase()))
+          .toList();
+    }
+    setState(() {
+      filteredBooks = results;
+      print('Filtered to ${results.length} books');
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kPrimaryColor,
       appBar: AppBar(
         title: Text('Books in Department'),
         actions: <Widget>[
@@ -129,7 +138,10 @@ class ExchangeBookPage extends StatelessWidget {
                 context,
                 MaterialPageRoute<void>(
                   builder: (BuildContext context) {
-                    return AddBookPage(collegeId: collegeId, departmentId: departmentId);
+                    return AddBookPage(
+                      collegeId: widget.collegeId,
+                      departmentId: widget.departmentId,
+                    );
                   },
                 ),
               );
@@ -139,61 +151,314 @@ class ExchangeBookPage extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(15),
-        child: StreamBuilder<QuerySnapshot>(
-          stream: FirebaseFirestore.instance
-              .collection('Colleges')
-              .doc(collegeId)
-              .collection('Departments')
-              .doc(departmentId)
-              .collection('Books')
-              .snapshots(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator());
-            }
-            if (snapshot.hasError) {
-              return Center(child: Text('Error: ${snapshot.error}'));
-            }
-            final books = snapshot.data!.docs;
-            return Expanded(
-              child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 16,
-                  mainAxisSpacing: 16,
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(30.0),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black26,
+                      blurRadius: 10.0,
+                      offset: Offset(0, 2),
+                    ),
+                  ],
                 ),
-                itemCount: books.length,
-                itemBuilder: (context, index) {
-                  final book = books[index];
-                  List<dynamic> imageUrlsDynamic = book['imageUrls'] ?? [];
-                  List<String> imageUrls = imageUrlsDynamic.map((url) => url.toString()).toList();
-                  return GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => DisplayBookPage (
+                child: TextField(
+                  controller: searchController,
+                  decoration: InputDecoration(
+                    hintText: 'Search by book name',
+                    hintStyle: TextStyle(color: kPrimaryColor),
+                    border: InputBorder.none,
+                    prefixIcon: Icon(Icons.search, color: kPrimaryColor),
+                    contentPadding: EdgeInsets.symmetric(vertical: 15.0),
+                    isDense: true,
+                  ),
+                  style: TextStyle(color: kPrimaryColor),
+                ),
+              ),
+            ),
+            Expanded(
+              child: filteredBooks.isEmpty
+                  ? Center(child: Text('No books found'))
+                  : GridView.builder(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 16,
+                        mainAxisSpacing: 16,
+                      ),
+                      itemCount: filteredBooks.length,
+                      itemBuilder: (context, index) {
+                        final book = filteredBooks[index];
+                        List<dynamic> imageUrlsDynamic = book['imageUrls'] ?? [];
+                        List<String> imageUrls = imageUrlsDynamic.map((url) => url.toString()).toList();
+
+                        String bookId = book.id;
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => DisplayBookPage(
+                                  bookName: book['bookName'],
+                                  bookPrice: book['bookPrice'],
+                                  imageUrls: imageUrls,
+                                  email: book['email'],
+                                  additionalDetails: book['additionalDetails'],
+                                  bookStatus: book['bookStatus'],
+                                  bookId: bookId,
+                                  collegeId: widget.collegeId,
+                                  departmentId: widget.departmentId,
+                                  userId: book['userId'],
+                                ),
+                              ),
+                            );
+                          },
+                          child: BookItem(
                             bookName: book['bookName'],
                             bookPrice: book['bookPrice'],
                             imageUrls: imageUrls,
                             email: book['email'],
-                            category: book['category'], // Assuming 'category' is a field in your book document
-                            // Add other book information as needed
+                            additionalDetails: book['additionalDetails'],
+                            bookStatus: book['bookStatus'],
+                            bookId: bookId,
+                            collegeId: widget.collegeId,
+                            departmentId: widget.departmentId,
+                            userId: book['userId'],
                           ),
-                        ),
-                      );
-                    },
-                    child: BookItem(
-                      bookName: book['bookName'],
-                      bookPrice: book['bookPrice'],
-                      imageUrls: imageUrls,
-                      email: book['email'],
+                        );
+                      },
                     ),
-                  );
-                },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+*/
+
+
+
+
+
+
+
+
+
+import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_application_1/ExchangeBook/addbookpage.dart';
+import 'package:flutter_application_1/ExchangeBook/displaybookpage.dart';
+import 'package:flutter_application_1/exchangebook/bookitem.dart';
+
+class ExchangeBookPage extends StatefulWidget {
+  final String? collegeId;
+  final String? departmentId;
+
+  ExchangeBookPage({Key? key, this.collegeId, this.departmentId}) : super(key: key);
+
+  @override
+  State<ExchangeBookPage> createState() => _ExchangeBookPageState();
+}
+
+class _ExchangeBookPageState extends State<ExchangeBookPage> {
+  List<QueryDocumentSnapshot<Map<String, dynamic>>> allResults = [];
+  List<QueryDocumentSnapshot<Map<String, dynamic>>> filteredBooks = [];
+  TextEditingController searchController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    getBookStream();
+    searchController.addListener(_onSearchChanged);
+  }
+
+  @override
+  void dispose() {
+    searchController.removeListener(_onSearchChanged);
+    searchController.dispose();
+    super.dispose();
+  }
+
+  _onSearchChanged() {
+    filterBooks();
+  }
+
+  getBookStream() async {
+    try {
+      String? collegeId = widget.collegeId;
+      String? departmentId = widget.departmentId;
+
+      if (collegeId == null || departmentId == null) {
+        print('collegeId or departmentId is null');
+        return;
+      }
+
+      QuerySnapshot<Map<String, dynamic>> data = await FirebaseFirestore.instance
+          .collection('Colleges')
+          .doc(collegeId)
+          .collection('Departments')
+          .doc(departmentId)
+          .collection('Books')
+          .orderBy('bookName')
+          .get();
+      
+      // Debug: Print fetched data
+      data.docs.forEach((doc) => print('Fetched book: ${doc.data()}'));
+
+      setState(() {
+        allResults = data.docs;
+        filteredBooks = allResults;
+      });
+
+      print('Fetched ${data.docs.length} books');
+    } catch (e) {
+      print('Error fetching books: $e');
+    }
+  }
+
+  filterBooks() {
+    List<QueryDocumentSnapshot<Map<String, dynamic>>> results = [];
+    if (searchController.text.isEmpty) {
+      results = allResults;
+    } else {
+      results = allResults
+          .where((book) => book['bookName']
+              .toString()
+              .toLowerCase()
+              .contains(searchController.text.toLowerCase()))
+          .toList();
+    }
+    setState(() {
+      filteredBooks = results;
+      print('Filtered to ${results.length} books');
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final primaryColor = Theme.of(context).primaryColor;
+    final secondaryColor = Theme.of(context).colorScheme.secondary;
+
+    return Scaffold(
+     // backgroundColor: kPrimaryColor,
+      appBar: AppBar(
+        backgroundColor: kPrimaryColor
+        ,
+                iconTheme: IconThemeData(color: ksecondaryColor),
+
+        title: Text('Books in Department',style: TextStyle(color:ksecondaryColor ),),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.add),
+            tooltip: 'Add Book',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute<void>(
+                  builder: (BuildContext context) {
+                    return AddBookPage(
+                      collegeId: widget.collegeId,
+                      departmentId: widget.departmentId,
+                    );
+                  },
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(15),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(bottom:22,top:5),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: ksecondaryColor,
+                  borderRadius: BorderRadius.circular(30.0),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black26,
+                      blurRadius: 10.0,
+                      offset: Offset(0, 2),
+                    ),
+                  ],
+                ),
+                child: TextField(
+                  controller: searchController,
+                  decoration: InputDecoration(
+                    hintText: 'Search by book name',
+                    hintStyle: TextStyle(color: kPrimaryColor),
+                    border: InputBorder
+                    
+                    .none,
+                    prefixIcon: Icon(Icons.search, color: kPrimaryColor),
+                    contentPadding: EdgeInsets.symmetric(vertical: 15.0),
+                    isDense: true,
+                  ),
+                  style: TextStyle(color: ksecondaryColor),
+                ),
               ),
-            );
-          },
+            ),
+            Expanded(
+              child: filteredBooks.isEmpty
+                  ? Center(child: Text('No books found'))
+                  : GridView.builder(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 16,
+                        mainAxisSpacing: 16,
+                      ),
+                      itemCount: filteredBooks.length,
+                      itemBuilder: (context, index) {
+                        final book = filteredBooks[index];
+                        List<dynamic> imageUrlsDynamic = book['imageUrls'] ?? [];
+                        List<String> imageUrls = imageUrlsDynamic.map((url) => url.toString()).toList();
+
+                        String bookId = book.id;
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => DisplayBookPage(
+                                  bookName: book['bookName'],
+                                  bookPrice: book['bookPrice'],
+                                  imageUrls: imageUrls,
+                                  email: book['email'],
+                                  additionalDetails: book['additionalDetails'],
+                                  bookStatus: book['bookStatus'],
+                                  bookId: bookId,
+                                  collegeId: widget.collegeId,
+                                  departmentId: widget.departmentId,
+                                  userId: book['userId'],
+                                ),
+                              ),
+                            );
+                          },
+                          child: BookItem(
+                            bookName: book['bookName'],
+                            bookPrice: book['bookPrice'],
+                            imageUrls: imageUrls,
+                            email: book['email'],
+                            additionalDetails: book['additionalDetails'],
+                            bookStatus: book['bookStatus'],
+                            bookId: bookId,
+                            collegeId: widget.collegeId,
+                            departmentId: widget.departmentId,
+                            userId: book['userId'],
+                          ),
+                        );
+                      },
+                    ),
+            ),
+          ],
         ),
       ),
     );
