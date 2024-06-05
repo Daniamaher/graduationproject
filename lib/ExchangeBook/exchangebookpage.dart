@@ -345,7 +345,7 @@ class _ExchangeBookPageState extends State<ExchangeBookPage> {
     final secondaryColor = Theme.of(context).colorScheme.secondary;
 
     return Scaffold(
-     // backgroundColor: kPrimaryColor,
+     backgroundColor: kPrimaryColor,
       appBar: AppBar(
         backgroundColor: kPrimaryColor
         ,
@@ -386,7 +386,7 @@ class _ExchangeBookPageState extends State<ExchangeBookPage> {
                     BoxShadow(
                       color: Colors.black26,
                       blurRadius: 10.0,
-                      offset: Offset(0, 2),
+                      offset: Offset(0, 4),
                     ),
                   ],
                 ),
