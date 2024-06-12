@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/ExchangeBook/collegelistpage.dart';
 import 'package:flutter_application_1/ExchangeBook/exchangebookpage.dart';
+import 'package:flutter_application_1/Housing/pages/HousesPage.dart';
 import 'package:flutter_application_1/toutring/menu.dart';
 
 class Home extends StatefulWidget {
@@ -22,9 +23,17 @@ class _HomeState extends State<Home> {
           children: [
             TextButton(
               onPressed: () {
-                Navigator.of(context).pushNamed("Fitring");
+               Navigator.push(
+                context,
+                MaterialPageRoute<void>(
+                  builder: (BuildContext context) {
+                  
+                    return HousingPage();
+                  },
+                ),
+              );
               },
-              child: Text("Go To Toutring Page"),
+              child: Text("Go To Housing Page"),
 
             ),
             SizedBox(height:30),

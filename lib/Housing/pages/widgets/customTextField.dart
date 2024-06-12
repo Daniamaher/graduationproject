@@ -12,7 +12,9 @@ class CustomTextField extends StatelessWidget {
   final String? Function(String?)? validator;
   final void Function(String?)? onSaved;
   final Function(String)? onChanged;
+final Future<Null> Function() ?onTap;
 
+  final bool ? readOnly;
   CustomTextField({
     Key? key,
     this.label,
@@ -22,7 +24,7 @@ class CustomTextField extends StatelessWidget {
     this.controller,
     this.validator,
     this.onSaved,
-    this.onChanged,
+    this.onChanged,   this.onTap, this.readOnly,
   }) : super(key: key);
 
   @override
