@@ -128,7 +128,7 @@ class _HouseOwnerRegistrationPageState
                     },
                   ),
                   SizedBox(height: 20),
-                  CustomTextField(
+                 /* CustomTextField(
                     hint: 'Phone Number',
                     controller: phoneNumberController,
                     validator: (value) {
@@ -137,7 +137,28 @@ class _HouseOwnerRegistrationPageState
                       }
                       return null;
                     },
+                  ),*/
+
+
+CustomTextField(
+                    hint: 'Phone Number',
+                    controller: phoneNumberController,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter your phone number';
+                      }
+                      if (value.length != 10) {
+                        return 'Phone number must be 10 digits long';
+                      }
+                      if (!['079', '078', '077']
+                          .any((prefix) => value.startsWith(prefix))) {
+                        return 'Phone number must start with 079, 078 or 077';
+                      }
+                      return null;
+                    },
                   ),
+
+
                   SizedBox(height: 20),
                   CustomTextField(
                     hint: 'Email',

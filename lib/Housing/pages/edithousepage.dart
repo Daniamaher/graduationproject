@@ -87,8 +87,15 @@ class _EditHousePageState extends State<EditHousePage> {
               controller: numBathroomsController,
             ),
             SizedBox(height: 20),
-           
-            SizedBox(height: 8),
+  Text(
+      'Gender',
+      style: TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.bold,
+      ),
+    ),
+    SizedBox(height: 8),
+            //SizedBox(height: 8),
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),

@@ -13,6 +13,7 @@ class CustomTextField extends StatelessWidget {
   final void Function(String?)? onSaved;
   final Function(String)? onChanged;
 final Future<Null> Function() ?onTap;
+ final TextInputType ?keyboardType;
 
   final bool ? readOnly;
   CustomTextField({
@@ -24,7 +25,7 @@ final Future<Null> Function() ?onTap;
     this.controller,
     this.validator,
     this.onSaved,
-    this.onChanged,   this.onTap, this.readOnly,
+    this.onChanged,   this.onTap, this.readOnly, this.keyboardType,
   }) : super(key: key);
 
   @override
