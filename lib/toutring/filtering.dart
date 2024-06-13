@@ -726,13 +726,13 @@ Future<void> _showFeedbackDialog(
 */
 
 import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/constant.dart';
 import 'package:flutter_application_1/toutring/ReviewScreen.dart';
-import 'package:flutter_application_1/toutring/menu.dart';
 import 'package:flutter_application_1/toutring/visitprofile.dart';
 
 class Fitring extends StatefulWidget {
@@ -1021,7 +1021,6 @@ class _FitringState extends State<Fitring> {
               ));
         },
       ),
-      drawer: Menu(),
     );
   }
 }

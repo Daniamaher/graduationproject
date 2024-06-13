@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Housing/pages/houseownerloginpage.dart';
 import 'package:flutter_application_1/Housing/pages/widgets/customTextField.dart';
+import 'package:flutter_application_1/authForStudent/studentRegistrationPage.dart';
 import 'package:flutter_application_1/constant.dart';
 import 'package:flutter_application_1/toutring/profile.dart';
 import 'package:flutter_application_1/toutring/studentRegistrationPage.dart';
@@ -172,7 +173,7 @@ class _StudentLoginPageState extends State<StudentLoginPage> {
 
 
 
-
+/*corrwct with out mAha
 class StudentLoginPage extends StatefulWidget {
   const StudentLoginPage({Key? key}) : super(key: key);
 
@@ -359,3 +360,8 @@ class _StudentLoginPageState extends State<StudentLoginPage> {
     );
   }
 }
+*/
+
+
+
+

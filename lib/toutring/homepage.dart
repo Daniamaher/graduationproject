@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/ExchangeBook/collegelistpage.dart';
-import 'package:flutter_application_1/ExchangeBook/exchangebookpage.dart';
-import 'package:flutter_application_1/Housing/pages/HousesPage.dart';
-import 'package:flutter_application_1/toutring/menu.dart';
+import 'package:flutter_application_1/Cstum/menu.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -18,47 +15,35 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         title: Text("Home page"),
       ),
-      body: Center(
-        child: Column(
-          children: [
-            TextButton(
+      body: Column(
+        children: [
+          Center(
+            child: TextButton(
               onPressed: () {
-               Navigator.push(
-                context,
-                MaterialPageRoute<void>(
-                  builder: (BuildContext context) {
-                  
-                    return HousingPage();
-                  },
-                ),
-              );
+                Navigator.of(context).pushNamed("Fitring");
               },
-              child: Text("Go To Housing Page"),
-
+              child: Text("Go To Toutring Page"),
             ),
-            SizedBox(height:30),
-             TextButton(
-              onPressed: () {
-               
-
-
-
-               Navigator.push(
-                context,
-                MaterialPageRoute<void>(
-                  builder: (BuildContext context) {
-                  
-                    return CollegeListPage();
-                  },
-                ),
-              );
-
-
-              },
-              child: Text("Exchange Book Page"),
-            ),
-          ],
-        ),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pushNamed('VotedList');
+            },
+            child: Text("Go To  'VotingScreen'"),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pushNamed('Secondconnect');
+            },
+            child: Text('Secondconnect'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pushNamed('Firstconnet');
+            },
+            child: Text('Firstconnet'),
+          ),
+        ],
       ),
       drawer: Menu(),
     );
