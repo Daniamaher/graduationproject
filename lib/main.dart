@@ -106,9 +106,9 @@ class MyApp extends StatelessWidget {
         "Fitring": (context) => Fitring(),
         'Dashboured': (context) => Dashboured(),
         'VotingScreen': (context) => VotingScreen(),
-        'CreateVoteForm': (context) => CreateVoteForm(),
+        //'CreateVoteForm': (context) => CreateVoteForm(),
         "VoteList": (context) => VoteList(),
-        'VotedList': (context) => VotedList(),
+       // 'VotedList': (context) => VotedList(),
         'TeachOrNotScreen': (context) => TeachOrNotScreen(),
         'Secondconnect': (context) => Secondconnect(),
         'Firstconnet': (context) => Firstconnet()

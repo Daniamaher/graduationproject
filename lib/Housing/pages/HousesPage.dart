@@ -620,7 +620,6 @@ class _HousingPageState extends State<HousingPage> {
         ),
         actions: <Widget>[
                     if (showAddHouseIcon)
-
           IconButton(
             icon: const Icon(Icons.home),
             tooltip: 'My House',
@@ -711,9 +710,11 @@ class _HousingPageState extends State<HousingPage> {
                   email: houseData['email'] ?? '',
                   bathrooms: houseData['numBathrooms'] ?? 0,
                   houseId: houseDocs[index].id,
+                
                 );
               },
             );
+            
           },
         ),
       ),
@@ -810,8 +811,8 @@ class _HousingPageState extends State<HousingPage> {
                       items: <String>['', 'male', 'female', 'male and female']
                           .map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
-                          value: value.isNotEmpty ? value : 'Any Gender',
-                          child: Text(value.isNotEmpty ? value : 'Any Gender'),
+                          value: value.isNotEmpty ? value : 'Gender',
+                          child: Text(value.isNotEmpty ? value : ' Gender'),
                         );
                       }).toList(),
                     );

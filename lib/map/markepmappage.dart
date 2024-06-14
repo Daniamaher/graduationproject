@@ -1,16 +1,15 @@
 
 
-
-
-
-
-
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
+// MarkerMapPage for selecting location on the map
 class MarkerMapPage extends StatefulWidget {
   final Function(LatLng) onLocationSelected;
 
@@ -155,24 +154,9 @@ class _MarkerMapPageState extends State<MarkerMapPage> {
       _autoZoomEnabled = value;
     });
   }
-
-  void _saveLocation(LatLng position) async {
-    try {
-      await FirebaseFirestore.instance.collection('locations').add({
-        'latitude': position.latitude,
-        'longitude': position.longitude,
-      });
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text('Location saved!'),
-      ));
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text('Failed to save location: $e'),
-      ));
-    }
-  }
 }
 
+// SearchBar widget for location search and auto-zoom toggle
 class SearchBar extends StatefulWidget {
   final Function(String) onSearch;
   final Function(bool) onToggleAutoZoom;
@@ -238,3 +222,4 @@ class _SearchBarState extends State<SearchBar> {
     );
   }
 }
+

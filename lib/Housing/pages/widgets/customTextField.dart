@@ -64,6 +64,7 @@ final Future<Null> Function() ?onTap;
             border: buildBorder(),
             enabledBorder: buildBorder(kPrimaryColor),
             focusedBorder: buildBorder(kPrimaryColor),
+            
           ),
         ),
       ],

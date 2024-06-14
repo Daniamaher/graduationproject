@@ -1,16 +1,17 @@
 
 
+
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Housing/pages/widgets/customTextField.dart';
 import 'package:flutter_application_1/constant.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../map/markepmappage.dart';
-import 'package:image_picker/image_picker.dart';
 
 class AddHousePage extends StatefulWidget {
   @override
@@ -23,19 +24,77 @@ class _AddHousePageState extends State<AddHousePage> {
   final TextEditingController numRoomsController = TextEditingController();
   final TextEditingController numBathroomsController = TextEditingController();
   final TextEditingController numOccupantsController = TextEditingController();
-  final locationController = TextEditingController();
+  final TextEditingController locationController = TextEditingController();
   double? latitude;
   double? longitude;
   final FirestoreService firestoreService = FirestoreService();
 
   List<String> imageUrls = [];
-  String? _selectedGender;
+  String? selectedGender;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  Future<void> _pickImages() async {
+    final picker = ImagePicker();
+    List<XFile>? images = await picker.pickMultiImage();
+    if (images != null) {
+      for (var image in images) {
+        setState(() {
+          imageUrls.add(image.path);
+        });
+        print('Added image: ${image.path}');
+      }
+    }
+  }
+
+  void _validateAndAddHouse() {
+    if (_formKey.currentState!.validate()) {
+      _addHouse();
+    }
+  }
+
+
+
+  void _addHouse() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      List<String> uploadedImageUrls = [];
+      for (var imagePath in imageUrls) {
+        File imageFile = File(imagePath);
+        if (imageFile.existsSync()) {
+          try {
+            String uploadedImageUrl = await firestoreService.uploadImage(imageFile);
+            uploadedImageUrls.add(uploadedImageUrl);
+          } catch (error) {
+            print('Error uploading image: $error');
+          }
+        } else {
+          print('File does not exist: $imagePath');
+        }
+      }
+
+      final houseData = {
+        'userId': user.uid,
+        'houseName': houseNameController.text,
+        'price': double.parse(priceController.text),
+        'numRooms': int.parse(numRoomsController.text),
+        'numBathrooms': int.parse(numBathroomsController.text),
+        'gender': selectedGender,
+        'numOccupants': int.parse(numOccupantsController.text),
+        'email': user.email,
+        'imageUrls': uploadedImageUrls,
+        'location': locationController.text,
+        'latitude': latitude,
+        'longitude': longitude,
+      };
+
+      await firestoreService.addHouse(user.uid, houseData);
+      Navigator.pop(context);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final user = FirebaseAuth.instance.currentUser;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: kPrimaryColor,
@@ -120,7 +179,8 @@ class _AddHousePageState extends State<AddHousePage> {
                     }
                   },
                 ),
-                SizedBox(height: 20),
+                                SizedBox(height: 20),
+
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
@@ -134,10 +194,10 @@ class _AddHousePageState extends State<AddHousePage> {
                       iconSize: 40,
                       elevation: 16,
                       hint: Text('Select Gender'),
-                      value: _selectedGender,
+                      value: selectedGender,
                       onChanged: (value) {
                         setState(() {
-                          _selectedGender = value;
+                          selectedGender = value;
                         });
                       },
                       validator: (value) {
@@ -174,7 +234,43 @@ class _AddHousePageState extends State<AddHousePage> {
                   ),
                 ),
                 SizedBox(height: 20),
-                Container(
+                CustomTextField(
+                  hint: 'Location',
+                  controller: locationController,
+                  readOnly: true,
+                  onTap: () async {
+                    final location = await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MarkerMapPage(
+                          onLocationSelected: (location) {
+                            setState(() {
+                              latitude = location.latitude;
+                              longitude = location.longitude;
+                            });
+                          },
+                        ),
+                      ),
+                    );
+
+                    if (latitude != null && longitude != null) {
+                      List<Placemark> placemarks = await placemarkFromCoordinates(latitude!, longitude!);
+                      if (placemarks.isNotEmpty) {
+                        Placemark place = placemarks[0];
+                        locationController.text =//"  ${place.subLocality} ,${place.locality},${place.country}";
+                          " ${place.subLocality}, ${place.locality}, ${place.country}";
+                      }
+                    }
+                  },
+                ),
+                SizedBox(height: 20),
+                /*
+                ElevatedButton(
+                  onPressed: _pickImages,
+                  child: Text('Pick Images'),
+                ),
+*/
+              Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
                   ),
@@ -210,33 +306,13 @@ class _AddHousePageState extends State<AddHousePage> {
                     ),
                   ),
                 SizedBox(height: 30),
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextFormField(
-                        controller: locationController,
-                        decoration: InputDecoration(labelText: 'Location'),
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Please enter a location';
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                    SizedBox(width: 10),
-                    ElevatedButton(
-                      onPressed: _selectLocation,
-                      child: Text('Pick Location'),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 30),
-                Padding(
-                  padding: const EdgeInsets.only(right: 60.0, left: 60),
+
+
+                SizedBox(height: 20),
+                Center(
                   child: ElevatedButton(
                     onPressed: _validateAndAddHouse,
-                    child: Center(child: Text('Add House')),
+                    child: Text('Add House'),
                   ),
                 ),
               ],
@@ -246,134 +322,111 @@ class _AddHousePageState extends State<AddHousePage> {
       ),
     );
   }
-
-  Future<void> _pickImages() async {
-    final picker = ImagePicker();
-    List<XFile>? images = await picker.pickMultiImage();
-    if (images != null) {
-      for (var image in images) {
-        setState(() {
-          imageUrls.add(image.path);
-        });
-        print('Added image: ${image.path}');
-      }
-    }
-  }
-
-  void _validateAndAddHouse() {
-    if (_formKey.currentState!.validate()) {
-      _addHouse();
-    }
-  }
-
-  void _addHouse() async {
-    final user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      List<String> uploadedImageUrls = [];
-      for (var imagePath in imageUrls) {
-        File imageFile = File(imagePath);
-        if (imageFile.existsSync()) {
-          try {
-            String uploadedImageUrl = await firestoreService.uploadImage(imageFile);
-            uploadedImageUrls.add(uploadedImageUrl);
-          } catch (error) {
-            print('Error uploading image: $error');
-          }
-        } else {
-          print('File does not exist: $imagePath');
-        }
-      }
-
-      final houseData = {
-        'userId': user.uid,
-        'houseName': houseNameController.text,
-        'price': double.parse(priceController.text),
-        'numRooms': int.parse(numRoomsController.text),
-        'numBathrooms': int.parse(numBathroomsController.text),
-        'gender': _selectedGender,
-        'numOccupants': int.parse(numOccupantsController.text),
-        'email': user.email,
-        'imageUrls': uploadedImageUrls,
-        'location': locationController.text,
-        'latitude': latitude,
-        'longitude': longitude,
-      };
-
-      await firestoreService.addHouse(user.uid, houseData);
-      Navigator.pop(context);
-    }
-  }
-
-  void _selectLocation() async {
-    final selectedLocation = await Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => MarkerMapPage(
-          onLocationSelected: (latLng) {
-            setState(() {
-              latitude = latLng.latitude;
-              longitude = latLng.longitude;
-              locationController.text = 'Selected Location';
-            });
-          },
-        ),
-      ),
-    );
-
-    if (selectedLocation != null) {
-      setState(() {
-        locationController.text = 'Location Selected';
-      });
-    }
-  }
-
-  @override
-  void dispose() {
-    houseNameController.dispose();
-    priceController.dispose();
-    numRoomsController.dispose();
-    numBathroomsController.dispose();
-    numOccupantsController.dispose();
-    super.dispose();
-  }
 }
+
+
 
 class FirestoreService {
-  final storage = FirebaseStorage.instance;
-  final FirebaseFirestore firestore = FirebaseFirestore.instance;
-
-  Future<String> uploadImage(File file) async {
-    try {
-      String fileName = DateTime.now().millisecondsSinceEpoch.toString();
-
-      Reference storageReference = storage.ref().child('images/$fileName');
-
-      UploadTask uploadTask = storageReference.putFile(file);
-
-      TaskSnapshot snapshot = await uploadTask;
-      String downloadUrl = await snapshot.ref.getDownloadURL();
-
-      return downloadUrl;
-    } catch (error) {
-      print('Error uploading image: $error');
-      throw error;
-    }
-  }
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
 
   Future<void> addHouse(String userId, Map<String, dynamic> houseData) async {
-    try {
-      CollectionReference housesCollection =
-          firestore.collection('users').doc(userId).collection('houses');
+    await _firestore.collection('users').doc(userId).collection('houses').add(houseData);
+  }
 
-      await housesCollection.add(houseData);
-
-      print('House added successfully.');
-    } catch (error) {
-      print('Error adding house: $error');
-      throw error;
-    }
+  Future<String> uploadImage(File imageFile) async {
+    String fileName = 'images/${DateTime.now().millisecondsSinceEpoch.toString()}.jpg';
+    TaskSnapshot taskSnapshot = await _firebaseStorage.ref(fileName).putFile(imageFile);
+    return await taskSnapshot.ref.getDownloadURL();
   }
 }
+
+class CustomTextField extends StatelessWidget {
+  final String? label;
+  final String hint;
+  final int maxLines;
+  final bool obscureText;
+  final TextEditingController? controller;
+  final String? Function(String?)? validator;
+  final void Function(String?)? onSaved;
+  final Function(String)? onChanged;
+  final Future<void> Function()? onTap;
+  final TextInputType? keyboardType;
+  final bool? readOnly;
+
+  CustomTextField({
+    Key? key,
+    this.label,
+    required this.hint,
+    this.maxLines = 1,
+    this.obscureText = false,
+    this.controller,
+    this.validator,
+    this.onSaved,
+    this.onChanged,
+    this.onTap,
+    this.readOnly,
+    this.keyboardType,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (label != null)
+          Text(
+            label!,
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          ),
+        if (label != null) SizedBox(height: 8),
+        TextFormField(
+          obscureText: obscureText,
+          onChanged: onChanged,
+          controller: controller,
+          onSaved: onSaved,
+          validator: (value) {
+            if (validator != null) {
+              return validator!(value);
+            } else {
+              if (value?.isEmpty ?? true) {
+                return 'Field is required';
+              } else {
+                return null;
+              }
+            }
+          },
+          cursorColor: kPrimaryColor,
+          maxLines: maxLines,
+          onTap: onTap,
+          readOnly: readOnly ?? false,
+          keyboardType: keyboardType,
+          decoration: InputDecoration(
+            filled: true,
+            fillColor: Colors.white,
+            hintText: hint,
+            border: buildBorder(),
+            enabledBorder: buildBorder(kPrimaryColor),
+            focusedBorder: buildBorder(kPrimaryColor),
+          ),
+        ),
+      ],
+    );
+  }
+
+  OutlineInputBorder buildBorder([Color? color]) {
+    return OutlineInputBorder(
+      borderRadius: BorderRadius.circular(20),
+      borderSide: BorderSide(color: color ?? Colors.white),
+    );
+  }
+}
+
+
+
+
+
+
 
 
 
