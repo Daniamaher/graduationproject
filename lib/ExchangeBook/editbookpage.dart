@@ -161,11 +161,14 @@ String bookId = widget.bookData['bookId']?? '';
                   decoration: InputDecoration(labelText: 'Book Price'),
                   controller: bookPriceController,
                   keyboardType: TextInputType.numberWithOptions(decimal: true),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter book price';
+                    validator: (value) {
+                    if (value?.isEmpty ?? true) {
+                      return 'Price is required';
+                    } else if (double.tryParse(value!) == null) {
+                      return 'Enter a valid price';
+                    } else {
+                      return null;
                     }
-                    return null;
                   },
                 ),
                 SizedBox(height: 20),

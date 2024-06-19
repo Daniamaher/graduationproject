@@ -613,7 +613,7 @@ class _HousingPageState extends State<HousingPage> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.white),
-        backgroundColor: Color(0xff0f1035),
+        backgroundColor: kPrimaryColor,
         title: Text(
           'Houses',
           style: TextStyle(color: Colors.white),
@@ -710,7 +710,7 @@ class _HousingPageState extends State<HousingPage> {
                   email: houseData['email'] ?? '',
                   bathrooms: houseData['numBathrooms'] ?? 0,
                   houseId: houseDocs[index].id,
-                
+                   
                 );
               },
             );

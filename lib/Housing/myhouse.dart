@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_application_1/Housing/pages/addhousepage.dart';
 import 'package:flutter_application_1/Housing/pages/housedetailspage.dart';
+import 'package:flutter_application_1/constant.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:flutter/material.dart';
@@ -16,9 +17,11 @@ class MyHousingPage extends StatelessWidget {
      final  User? user =auth.currentUser;
 
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('Houses'),
+              backgroundColor: kPrimaryColor,
+        iconTheme: IconThemeData(color: Colors.white),
+
+        title: Text('My Houses',style:TextStyle(color:Colors.white)),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.add),

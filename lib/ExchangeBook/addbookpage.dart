@@ -16,7 +16,6 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/painting.dart';
 import 'package:provider/provider.dart';
 
-
 class AddBookPage extends StatefulWidget {
   final String? collegeId;
   final String? departmentId;
@@ -146,12 +145,17 @@ class _AddBookPageState extends State<AddBookPage> {
                   controller: bookPriceController,
                   keyboardType: TextInputType.numberWithOptions(decimal: true),
                   validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter book price';
+                    if (value?.isEmpty ?? true) {
+                      return 'Price is required';
+                    } else if (double.tryParse(value!) == null) {
+                      return 'Enter a valid price';
+                    } else {
+                      return null;
                     }
-                    return null;
                   },
                 ),
+
+                
                 SizedBox(height: 20),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -290,3 +294,8 @@ class FirestoreService {
     }
   }
 }
+
+
+
+
+

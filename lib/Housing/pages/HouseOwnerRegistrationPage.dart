@@ -117,16 +117,27 @@ class _HouseOwnerRegistrationPageState
                     },
                   ),
                   SizedBox(height: 20),
-                  CustomTextField(
-                    hint: 'National Number',
-                    controller: nationalNumberController,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Please enter your national number';
-                      }
-                      return null;
-                    },
-                  ),
+                
+
+
+
+                            CustomTextField(
+            hint: 'National Number',
+            controller: nationalNumberController,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter your national number';
+              }
+              if (value.length != 10) {
+                return 'National Number must be exactly 10 digits';
+              }
+              if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
+                return 'National Number must contain only digits';
+              }
+              return null;
+            },
+          ),
+
                   SizedBox(height: 20),
                  /* CustomTextField(
                     hint: 'Phone Number',
@@ -154,6 +165,10 @@ CustomTextField(
                           .any((prefix) => value.startsWith(prefix))) {
                         return 'Phone number must start with 079, 078 or 077';
                       }
+                      
+                        if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
+                return 'phone Number must contain only digits';
+              }
                       return null;
                     },
                   ),
@@ -186,7 +201,7 @@ CustomTextField(
                         return 'Password must be at least 6 characters';
                       } else if (!RegExp(r'^(?=.?[a-z])(?=.?[A-Z])(?=.*?[0-9]).{6,}$')
                           .hasMatch(value)) {
-                        return 'Password must contain at least one uppercase letter, one lowercase letter, and one digit';
+                        return 'Password must contain at least one uppercase letter,\n one lowercase letter, and one digit';
                       }
                       return null;
                     },

@@ -1,7 +1,5 @@
 
-
 import 'dart:async';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Cstum/menu.dart';
@@ -15,6 +13,7 @@ import 'package:flutter_application_1/Housing/pages/housedetailspage.dart';
 import 'package:flutter_application_1/Housing/pages/houseownerloginpage.dart';
 import 'package:flutter_application_1/Housing/pages/HouseOwnerRegistrationPage.dart';
 import 'package:flutter_application_1/Housing/pages/HousesPage.dart';
+import 'package:flutter_application_1/authForStudent/ResetPasswordPage.dart';
 import 'package:flutter_application_1/authForStudent/Verify.dart';
 import 'package:flutter_application_1/authForStudent/studentLoginPag.dart';
 import 'package:flutter_application_1/authForStudent/studentRegistrationPage.dart';
@@ -34,26 +33,17 @@ import 'package:flutter_application_1/toutring/profile.dart';
 import 'package:flutter_application_1/toutring/studentLoginPage.dart';
 import 'package:flutter_application_1/toutring/studentRegistrationPage.dart';
 import 'package:flutter_application_1/toutring/verifystudent.dart';
-
 import 'package:provider/provider.dart';
 import 'package:flutter_application_1/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
-
 import 'exchangebook/exchangebookpage.dart';
-
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-
-
   runApp(
     MyApp(),
   );
 }
-
-
-
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -66,35 +56,24 @@ class MyApp extends StatelessWidget {
       initialRoute: '/StudentLoginPage',
       routes: {
           'houseownerloginpage': (context) => HouseOwnerLoginPage(),
-
         'houseownerregister': (context) => HouseOwnerRegistrationPage (),
         'houses': (context) => HousingPage(),
         'addHouse': (context) => AddHousePage(),
-
         'HouseDetailsPage': (context) => DisplayHouseDetailPage(houseDetails: HouseDetails.defaultData()),
-
          '/StudentLoginPage': (context) => StudentLoginPage(),
         '/ StudentrRegistrationPage': (context) => StudentRegistrationPage(),
-
         '/Home': (context) => Home(),
         'ProfileScreen': (context) => ProfileScreen(),
         'SettingForStudents': (context) => SettingsPage(),
         'StudentsWhoWantToTeachScreen': (context) =>
             StudentsWhoWantToTeachScreen(),
-       
         'VerifyStudentScreen' :(context) => VerifyStusentScreen (),
         'TeachOrNotScreen' :(context) => TeachOrNotScreen(),
-        
                       ' AddBookPage' :(context) =>  AddBookPage(),
                       ' DepartmentListPage' :(context) =>  DepartmentListPage(),
-
               'CollegeListPage' :(context) => CollegeListPage(),
                             'ExchangeBookPage' :(context) => ExchangeBookPage(),
           'DisplayBookPage' :(context) => DisplayBookPage(),
-
-            
-
-
              '/ LoginStateless': (context) => StudentLoginPage(),
         '/ StudentrRegistrationPage': (context) => StudentRegistrationPage(),
         '/Home': (context) => Home(),
@@ -111,17 +90,14 @@ class MyApp extends StatelessWidget {
        // 'VotedList': (context) => VotedList(),
         'TeachOrNotScreen': (context) => TeachOrNotScreen(),
         'Secondconnect': (context) => Secondconnect(),
-        'Firstconnet': (context) => Firstconnet()
-          
-             
-
+        'Firstconnet': (context) => Firstconnet(),
+                'ResetPasswordPage': (context) => ResetPasswordPage(),
+                        'VotingScreen': (context) => VotingScreen(),
+        'CreateVoteForm': (context) => CreateVoteForm(),
+        'VotedList': (context) => VotedList(),
 
 
       },
     );
   }
-
-
 }
-
-

@@ -52,7 +52,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/constant.dart';
 import 'package:flutter_application_1/poll/voterinfo.dart';
 import 'package:flutter_application_1/toutring/visitprofile.dart';
-
 class VotersListScreen extends StatelessWidget {
   final List<VoterInfo> voterInfoList;
 

@@ -1,3 +1,8 @@
+import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_application_1/constant.dart';
+import 'package:flutter_application_1/toutring/profile.dart';
 /*import 'package:appwithapi/tutoring/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -313,10 +318,10 @@ class _TeachOrNotScreenState extends State<TeachOrNotScreen> {
   }
 }
 */
+
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_application_1/toutring/profile.dart';
 
 Map<String, Map<String, List<String>>> categoryMap = {
   'Computer and Information Technology': {
@@ -365,6 +370,13 @@ class _TeachOrNotScreenState extends State<TeachOrNotScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: kPrimaryColor,
+        title: Text(
+          "Department and Major",
+          style: TextStyle(color: Colors.white),
+        ),
+      ),
       backgroundColor: Color(0xFFE6F3F3),
       body: Container(
         padding: const EdgeInsets.all(20),

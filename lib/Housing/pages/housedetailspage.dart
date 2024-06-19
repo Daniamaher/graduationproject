@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -11,6 +9,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_application_1/Housing/pages/edithousepage.dart';
 import 'package:flutter_application_1/constant.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DisplayHouseDetailPage extends StatefulWidget {
@@ -27,10 +26,18 @@ class _DisplayHouseDetailPageState extends State<DisplayHouseDetailPage> {
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser;
 
+
+        final double latitude = houseData['latitude'] is int
+            ? (houseData['latitude'] as int).toDouble()
+            : (houseData['latitude'] ?? 0.0).toDouble();
+        final double longitude = houseData['longitude'] is int
+            ? (houseData['longitude'] as int).toDouble()
+            : (houseData['longitude'] ?? 0.0).toDouble();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: kPrimaryColor,
-        title: Text(widget.houseDetails.houseName, style: TextStyle(color: Colors.white)),
+        title: Text(widget.houseDetails.houseName,
+            style: TextStyle(color: Colors.white)),
         iconTheme: IconThemeData(color: Colors.white),
         actions: [
           if (user != null && widget.houseDetails.userId == user.uid)
@@ -65,7 +72,8 @@ class _DisplayHouseDetailPageState extends State<DisplayHouseDetailPage> {
                   context: context,
                   builder: (BuildContext context) {
                     return AlertDialog(
-                      content: Text('Are you sure you want to delete this house?'),
+                      content:
+                          Text('Are you sure you want to delete this house?'),
                       actions: [
                         TextButton(
                           onPressed: () {
@@ -76,16 +84,28 @@ class _DisplayHouseDetailPageState extends State<DisplayHouseDetailPage> {
                         TextButton(
                           onPressed: () async {
                             try {
-                              CollectionReference housesCollection = FirebaseFirestore.instance.collection('users').doc(widget.houseDetails.userId).collection('houses');
+                              CollectionReference housesCollection =
+                                  FirebaseFirestore.instance
+                                      .collection('users')
+                                      .doc(widget.houseDetails.userId)
+                                      .collection('houses');
 
-                              QuerySnapshot querySnapshot = await housesCollection
-                                  .where('houseName', isEqualTo: widget.houseDetails.houseName)
-                                  .where('price', isEqualTo: widget.houseDetails.housePrice)
-                                  .where('email', isEqualTo: widget.houseDetails.email)
-                                  .get();
+                              QuerySnapshot querySnapshot =
+                                  await housesCollection
+                                      .where('houseName',
+                                          isEqualTo:
+                                              widget.houseDetails.houseName)
+                                      .where('price',
+                                          isEqualTo:
+                                              widget.houseDetails.housePrice)
+                                      .where('email',
+                                          isEqualTo: widget.houseDetails.email)
+                                      .get();
 
                               if (querySnapshot.docs.isNotEmpty) {
-                                await housesCollection.doc(querySnapshot.docs.first.id).delete();
+                                await housesCollection
+                                    .doc(querySnapshot.docs.first.id)
+                                    .delete();
 
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
@@ -105,7 +125,8 @@ class _DisplayHouseDetailPageState extends State<DisplayHouseDetailPage> {
                               print('Error deleting house: $e');
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
-                                  content: Text('Failed to delete house. Please try again later.'),
+                                  content: Text(
+                                      'Failed to delete house. Please try again later.'),
                                 ),
                               );
                             }
@@ -165,6 +186,24 @@ class _DisplayHouseDetailPageState extends State<DisplayHouseDetailPage> {
               title: Text('Email: ${widget.houseDetails.email}'),
               onTap: () => _launchEmail(widget.houseDetails.email),
             ),
+             const SizedBox(height: 10),
+                  Container(
+                    width: double.infinity,
+                    height: 200,
+                    child: GoogleMap(
+                      initialCameraPosition: CameraPosition(
+                        target: LatLng(latitude, longitude),
+                        zoom: 14,
+                      ),
+                      markers: {
+                        Marker(
+                          markerId: MarkerId('voteLocation'),
+                          position: LatLng(latitude, longitude),
+                        ),
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 10),
             Center(
               child: ElevatedButton(
                 onPressed: () {
@@ -207,7 +246,9 @@ class _DisplayHouseDetailPageState extends State<DisplayHouseDetailPage> {
                   );
                 }).toList();
 
-                double averageRating = reviews.fold(0, (sum, review) => sum + review.rating) / reviews.length;
+                double averageRating =
+                    reviews.fold(0, (sum, review) => sum + review.rating) /
+                        reviews.length;
                 int fullStars = averageRating.floor();
                 bool hasHalfStar = averageRating - fullStars >= 0.5;
 
@@ -218,11 +259,13 @@ class _DisplayHouseDetailPageState extends State<DisplayHouseDetailPage> {
                       children: List.generate(
                         fullStars,
                         (index) => Icon(Icons.star, color: Colors.yellow),
-                      )
-                        ..addAll(
+                      )..addAll(
                           [
-                            if (hasHalfStar) Icon(Icons.star_half, color: Colors.yellow),
-                            for (int i = 0; i < 5 - fullStars - (hasHalfStar ? 1 : 0); i++)
+                            if (hasHalfStar)
+                              Icon(Icons.star_half, color: Colors.yellow),
+                            for (int i = 0;
+                                i < 5 - fullStars - (hasHalfStar ? 1 : 0);
+                                i++)
                               Icon(Icons.star_border, color: Colors.yellow),
                           ],
                         ),
@@ -233,42 +276,50 @@ class _DisplayHouseDetailPageState extends State<DisplayHouseDetailPage> {
                       itemCount: reviews.length,
                       itemBuilder: (context, index) {
                         final review = reviews[index];
-                        final isOwnReview = user != null && review.userId == user.uid;
+                        final isOwnReview =
+                            user != null && review.userId == user.uid;
                         return Card(
                           elevation: 3,
-                          margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                          margin:
+                              EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                           child: ListTile(
                             title: Text(review.comment),
-                            subtitle: Text('Rating: ${review.rating}\nBy: ${review.email}'),
-                            trailing: isOwnReview ? Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                IconButton(
-                                  icon: Icon(Icons.edit),
-                                  onPressed: () {
-                                    showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return EditReviewDialog(houseDetails: widget.houseDetails, review: review);
-                                      },
-                                    );
-                                  },
-                                ),
-                                IconButton(
-                                  icon: Icon(Icons.delete),
-                                  onPressed: () async {
-                                    await FirebaseFirestore.instance
-                                        .collection('users')
-                                        .doc(widget.houseDetails.userId)
-                                        .collection('houses')
-                                        .doc(widget.houseDetails.houseId)
-                                        .collection('reviews')
-                                        .doc(review.id)
-                                        .delete();
-                                  },
-                                ),
-                              ],
-                            ) : null,
+                            subtitle: Text(
+                                'Rating: ${review.rating}\nBy: ${review.email}'),
+                            trailing: isOwnReview
+                                ? Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      IconButton(
+                                        icon: Icon(Icons.edit),
+                                        onPressed: () {
+                                          showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return EditReviewDialog(
+                                                  houseDetails:
+                                                      widget.houseDetails,
+                                                  review: review);
+                                            },
+                                          );
+                                        },
+                                      ),
+                                      IconButton(
+                                        icon: Icon(Icons.delete),
+                                        onPressed: () async {
+                                          await FirebaseFirestore.instance
+                                              .collection('users')
+                                              .doc(widget.houseDetails.userId)
+                                              .collection('houses')
+                                              .doc(widget.houseDetails.houseId)
+                                              .collection('reviews')
+                                              .doc(review.id)
+                                              .delete();
+                                        },
+                                      ),
+                                    ],
+                                  )
+                                : null,
                           ),
                         );
                       },
@@ -336,17 +387,6 @@ class Review {
   }
 }
 
-
-
-
-
-
-
-
-
-
-
-
 class HouseDetails {
   final String houseId;
   final String houseName;
@@ -392,12 +432,6 @@ class HouseDetails {
   }
 }
 
-
-
-
-
-
-
 class AddReviewDialog extends StatefulWidget {
   final HouseDetails houseDetails;
 
@@ -422,12 +456,13 @@ class _AddReviewDialogState extends State<AddReviewDialog> {
     if (_formKey.currentState!.validate()) {
       final user = FirebaseAuth.instance.currentUser;
       if (user == null) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('You need to be logged in to submit a review.')));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text('You need to be logged in to submit a review.')));
         return;
       }
       final userEmail = user.email ?? 'unknown@example.com';
       final review = Review(
-        id: '',  
+        id: '',
         userId: user.uid,
         email: userEmail,
         rating: _rating,
@@ -443,7 +478,8 @@ class _AddReviewDialogState extends State<AddReviewDialog> {
           .collection('reviews')
           .add(review.toFirestore());
 
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Review submitted successfully.')));
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Review submitted successfully.')));
       _commentController.clear();
       setState(() {
         _rating = 1;
@@ -467,22 +503,24 @@ class _AddReviewDialogState extends State<AddReviewDialog> {
                 decoration: InputDecoration(labelText: 'Rating'),
                 items: List.generate(5, (index) => index + 1)
                     .map((rating) => DropdownMenuItem(
-                  value: rating,
-                  child: Text('$rating Star${rating > 1 ? 's' : ''}'),
-                ))
+                          value: rating,
+                          child: Text('$rating Star${rating > 1 ? 's' : ''}'),
+                        ))
                     .toList(),
                 onChanged: (value) {
                   setState(() {
                     _rating = value!;
                   });
                 },
-                validator: (value) => value == null ? 'Please select a rating' : null,
+                validator: (value) =>
+                    value == null ? 'Please select a rating' : null,
               ),
               TextFormField(
                 controller: _commentController,
                 decoration: InputDecoration(labelText: 'Comment'),
                 maxLines: 3,
-                validator: (value) => value!.isEmpty ? 'Please enter a comment' : null,
+                validator: (value) =>
+                    value!.isEmpty ? 'Please enter a comment' : null,
               ),
             ],
           ),
@@ -503,13 +541,6 @@ class _AddReviewDialogState extends State<AddReviewDialog> {
     );
   }
 }
-
-
-
-
-
-
-
 
 class EditReviewDialog extends StatefulWidget {
   final HouseDetails houseDetails;
@@ -559,7 +590,8 @@ class _EditReviewDialogState extends State<EditReviewDialog> {
           .doc(widget.review.id)
           .set(updatedReview.toFirestore());
 
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Review updated successfully.')));
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Review updated successfully.')));
       Navigator.pop(context);
     }
   }
@@ -579,22 +611,24 @@ class _EditReviewDialogState extends State<EditReviewDialog> {
                 decoration: InputDecoration(labelText: 'Rating'),
                 items: List.generate(5, (index) => index + 1)
                     .map((rating) => DropdownMenuItem(
-                  value: rating,
-                  child: Text('$rating Star${rating > 1 ? 's' : ''}'),
-                ))
+                          value: rating,
+                          child: Text('$rating Star${rating > 1 ? 's' : ''}'),
+                        ))
                     .toList(),
                 onChanged: (value) {
                   setState(() {
                     _rating = value!;
                   });
                 },
-                validator: (value) => value == null ? 'Please select a rating' : null,
+                validator: (value) =>
+                    value == null ? 'Please select a rating' : null,
               ),
               TextFormField(
                 controller: _commentController,
                 decoration: InputDecoration(labelText: 'Comment'),
                 maxLines: 3,
-                validator: (value) => value!.isEmpty ? 'Please enter a comment' : null,
+                validator: (value) =>
+                    value!.isEmpty ? 'Please enter a comment' : null,
               ),
             ],
           ),

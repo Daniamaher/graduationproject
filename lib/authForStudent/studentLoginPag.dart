@@ -2,9 +2,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Housing/pages/widgets/customTextField.dart';
+import 'package:flutter_application_1/authForStudent/ResetPasswordPage.dart';
 import 'package:flutter_application_1/authForStudent/studentRegistrationPage.dart';
 import 'package:flutter_application_1/connectingPage/firstconnetc.dart';
 import 'package:flutter_application_1/constant.dart';
+
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
 class StudentLoginPage extends StatefulWidget {
   const StudentLoginPage({Key? key}) : super(key: key);
@@ -115,7 +119,25 @@ class _StudentLoginPageState extends State<StudentLoginPage> {
                 controller: passwordController,
                 obscureText: true,
               ),
-              SizedBox(height: 40),
+              SizedBox(height: 15),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ResetPasswordPage()),
+                        );
+                      },
+                      child: Text(
+                        "Forgot password?",
+                        style: TextStyle(color: Colors.white),
+                      )),
+                ],
+              ),
+              SizedBox(height: 20),
               Center(
                 child: SizedBox(
                   width: 170,

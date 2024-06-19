@@ -185,7 +185,7 @@ class DisplayBookPage extends StatelessWidget {
                   ),
                   SizedBox(height: 10),
                   Text(
-                    'Owner Email: ${email ?? 'Not available'}',
+                    'Email: ${email ?? 'Not available'}',
                     style: TextStyle(fontSize: 18),
                   ),
                   SizedBox(height: 10),

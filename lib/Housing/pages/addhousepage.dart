@@ -98,6 +98,8 @@ class _AddHousePageState extends State<AddHousePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: kPrimaryColor,
+                iconTheme: IconThemeData(color: Colors.white),
+
         title: Text(
           'Add House',
           style: TextStyle(color: Colors.white),
