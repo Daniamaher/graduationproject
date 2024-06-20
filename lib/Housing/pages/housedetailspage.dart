@@ -669,6 +669,7 @@ class _EditReviewDialogState extends State<EditReviewDialog> {
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_application_1/constant.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -701,6 +702,8 @@ class MyApp extends StatelessWidget {
           latitude: 37.7749,
           longitude: -122.4194,
           location: 'San Francisco, CA',
+           isAvailable:true, // New field
+        hasFreeInternet:false
         ),
       ),
     );
@@ -750,6 +753,8 @@ class _DisplayHouseDetailPageState extends State<DisplayHouseDetailPage> {
                         'latitude': widget.houseDetails.latitude,
                         'longitude': widget.houseDetails.longitude,
                         'location': widget.houseDetails.location,
+                        'isAvailable':widget.houseDetails.isAvailable,
+                        'hasFreeInternet':widget.houseDetails.hasFreeInternet
                       },
                     ),
                   ),
@@ -792,7 +797,13 @@ class _DisplayHouseDetailPageState extends State<DisplayHouseDetailPage> {
             _buildInfoTile(Icons.home, 'Rooms: ${widget.houseDetails.rooms}'),
             _buildInfoTile(Icons.person, 'Gender: ${widget.houseDetails.gender}'),
             _buildInfoTile(Icons.email, 'Email: ${widget.houseDetails.email}', onTap: () => _launchEmail(widget.houseDetails.email)),
+
+                      _buildInfoTile(Icons.check, 'Available: ${widget.houseDetails.isAvailable ? 'Yes' : 'No'}'),
+          _buildInfoTile(Icons.wifi, 'Free Internet: ${widget.houseDetails.hasFreeInternet ? 'Yes' : 'No'}'),
+                     _buildInfoTile(Icons.location_on_outlined, 'Location ${widget.houseDetails.location }'),
+
             SizedBox(height: 10),
+
             _buildMap(latitude, longitude),
             SizedBox(height: 10),
             Center(
@@ -1191,6 +1202,8 @@ class HouseDetails {
   final double latitude;
   final double longitude;
   final String location;
+  final bool isAvailable;
+  final bool hasFreeInternet;
 
   HouseDetails({
     required this.userId,
@@ -1206,7 +1219,8 @@ class HouseDetails {
     required this.latitude,
     required this.longitude,
     required this.location,
-
+    required this.isAvailable,
+    required this.hasFreeInternet,
 
 });
 
@@ -1229,6 +1243,8 @@ factory HouseDetails.defaultData() {
       latitude: 0.0,
       longitude: 0.0,
       location: 'Default Location',
+      isAvailable: true,
+      hasFreeInternet: false,
     );
   }
 }
@@ -1252,6 +1268,10 @@ class Review {
   });
 }
 
+
+
+
+/*
 class EditHousePage extends StatelessWidget {
   final String userId;
   final Map<String, dynamic> houseData;
@@ -1272,3 +1292,4 @@ class EditHousePage extends StatelessWidget {
 }
 
 const kPrimaryColor = Color(0xff0f1035);
+*/

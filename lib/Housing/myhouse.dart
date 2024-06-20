@@ -18,7 +18,7 @@ class MyHousingPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-           //   backgroundColor: kPrimaryColor,
+            backgroundColor: kPrimaryColor,
         iconTheme: IconThemeData(color: Colors.white),
 
         title: Text('My Houses',style:TextStyle(color:Colors.white)),
@@ -77,7 +77,7 @@ class MyHousingPage extends StatelessWidget {
                   gender: houseData['gender'],
                   email: houseData['email'],
                   bathrooms: houseData['numBathrooms'], 
-                   houseId: houseDocs[index].id, latitude:houseData['latitude'] , longitude: houseData['longitude'], location: houseData['location']??'',
+                   houseId: houseDocs[index].id, latitude:houseData['latitude'] , longitude: houseData['longitude'], location: houseData['location']??'', isAvailable: houseData['isAvailable'], hasFreeInternet: houseData['hasFreeInternet'],
                 );
               },
             );
@@ -102,6 +102,9 @@ class HouseItem extends StatelessWidget {
      final double latitude;
      final String  location;
      final double longitude;
+      
+  final bool isAvailable;
+  final bool hasFreeInternet; 
   const HouseItem({
     required this.houseName,
     required this.housePrice,
@@ -111,7 +114,7 @@ class HouseItem extends StatelessWidget {
     required this.gender,
     required this.email,
     required this.userId,
-    required this.bathrooms, required this.houseId, required this.latitude, required this.location, required this.longitude,
+    required this.bathrooms, required this.houseId, required this.latitude, required this.location, required this.longitude, required this.isAvailable, required this.hasFreeInternet,
   });
 
   @override
@@ -137,7 +140,7 @@ class HouseItem extends StatelessWidget {
                 bathrooms: bathrooms,
                  latitude: latitude,
                 longitude: longitude,
-                location: location,
+                location: location, isAvailable: isAvailable, hasFreeInternet:hasFreeInternet,
                 
               ),
             ),

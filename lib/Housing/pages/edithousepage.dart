@@ -344,7 +344,12 @@ class _EditHousePageState extends State<EditHousePage> {
   final TextEditingController numRoomsController = TextEditingController();
   final TextEditingController numBathroomsController = TextEditingController();
   final TextEditingController numOccupantsController = TextEditingController();
+  
   final TextEditingController emailController = TextEditingController();
+  final TextEditingController additionalDetailsController = TextEditingController();
+
+  bool isAvailable = false;
+bool hasFreeInternet = false;
 
   List<String> imageUrls = [];
   String? _selectedGender;
@@ -361,6 +366,10 @@ class _EditHousePageState extends State<EditHousePage> {
     numOccupantsController.text = widget.houseData['numOccupants'].toString();
     emailController.text = widget.houseData['email'];
     imageUrls = List<String>.from(widget.houseData['imageUrls'] ?? []);
+    isAvailable = widget.houseData['isAvailable'] ?? false;
+  hasFreeInternet = widget.houseData['hasFreeInternet'] ?? false;
+    additionalDetailsController.text = widget.houseData['additionalDetails'] ?? '';
+
   }
 
   @override
@@ -512,6 +521,57 @@ class _EditHousePageState extends State<EditHousePage> {
                   return null;
                 },
               ),
+                            SizedBox(height: 20),
+
+                 Column(
+  crossAxisAlignment: CrossAxisAlignment.start,
+  children: [
+    Row(
+      children: [
+        Checkbox(
+          value: isAvailable,
+          onChanged: (value) {
+            setState(() {
+              isAvailable = value ?? false;
+            });
+          },
+        ),
+        Text('Available'),
+      ],
+    ),
+    Row(
+      children: [
+        Checkbox(
+          value: hasFreeInternet,
+          onChanged: (value) {
+            setState(() {
+              hasFreeInternet = value ?? false;
+            });
+          },
+        ),
+        Text('Free Internet'),
+      ],
+    ),
+    SizedBox(height: 20),
+    TextFormField(
+        controller: additionalDetailsController,
+
+      decoration: InputDecoration(
+        labelText: 'Additional Details (optional)',
+        hintText: 'Include any extra details of the house',
+      ),
+      initialValue: widget.houseData['additionalDetails'] ?? '',
+      onChanged: (value) {
+        // Update the additional details as they type
+        widget.houseData['additionalDetails'] = value;
+      },
+      maxLines: 3,
+    ),
+    SizedBox(height: 20),
+  ],
+),
+
+
               SizedBox(height: 20),
               Container(
                 decoration: BoxDecoration(
@@ -631,6 +691,11 @@ class _EditHousePageState extends State<EditHousePage> {
             'numOccupants': int.tryParse(numOccupantsController.text) ?? 0,
             'email': emailController.text,
             'imageUrls': imageUrls,
+              'isAvailable': isAvailable,
+          'hasFreeInternet': hasFreeInternet,
+          //'additionalDetails': widget.houseData['additionalDetails'] ?? '',
+            'additionalDetails': additionalDetailsController.text,
+
           };
 
           final QuerySnapshot querySnapshot = await FirebaseFirestore.instance
