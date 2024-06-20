@@ -18,7 +18,7 @@ class MyHousingPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-              backgroundColor: kPrimaryColor,
+           //   backgroundColor: kPrimaryColor,
         iconTheme: IconThemeData(color: Colors.white),
 
         title: Text('My Houses',style:TextStyle(color:Colors.white)),
@@ -77,7 +77,7 @@ class MyHousingPage extends StatelessWidget {
                   gender: houseData['gender'],
                   email: houseData['email'],
                   bathrooms: houseData['numBathrooms'], 
-                   houseId: houseDocs[index].id,
+                   houseId: houseDocs[index].id, latitude:houseData['latitude'] , longitude: houseData['longitude'], location: houseData['location']??'',
                 );
               },
             );
@@ -99,7 +99,9 @@ class HouseItem extends StatelessWidget {
   final String userId;
   final int bathrooms;
       final String houseId;  
-
+     final double latitude;
+     final String  location;
+     final double longitude;
   const HouseItem({
     required this.houseName,
     required this.housePrice,
@@ -109,7 +111,7 @@ class HouseItem extends StatelessWidget {
     required this.gender,
     required this.email,
     required this.userId,
-    required this.bathrooms, required this.houseId,
+    required this.bathrooms, required this.houseId, required this.latitude, required this.location, required this.longitude,
   });
 
   @override
@@ -133,6 +135,10 @@ class HouseItem extends StatelessWidget {
                 email: email,
                 userId: userId,
                 bathrooms: bathrooms,
+                 latitude: latitude,
+                longitude: longitude,
+                location: location,
+                
               ),
             ),
           ),

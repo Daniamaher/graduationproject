@@ -28,10 +28,12 @@ class _AddHousePageState extends State<AddHousePage> {
   double? latitude;
   double? longitude;
   final FirestoreService firestoreService = FirestoreService();
-
+  final TextEditingController additionalDetailsController = TextEditingController();
+  bool isAvailable = true;
+  bool hasFreeInternet = false;
   List<String> imageUrls = [];
   String? selectedGender;
-
+bool Notavailable=false;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   Future<void> _pickImages() async {
@@ -86,6 +88,11 @@ class _AddHousePageState extends State<AddHousePage> {
         'location': locationController.text,
         'latitude': latitude,
         'longitude': longitude,
+        'isAvailable': isAvailable,
+     'hasFreeInternet': hasFreeInternet,
+  //'Notavailable':Notavailable,
+  'additionalDetails': additionalDetailsController.text.isNotEmpty ? additionalDetailsController.text : null,
+
       };
 
       await firestoreService.addHouse(user.uid, houseData);
@@ -235,6 +242,43 @@ class _AddHousePageState extends State<AddHousePage> {
                     ),
                   ),
                 ),
+
+
+
+                SizedBox(height: 20),
+
+/*
+
+
+             Row(
+  children: [
+    Checkbox(
+      value: isAvailable,
+      onChanged: (value) {
+        setState(() {
+          isAvailable = value!;
+        });
+      },
+    ),
+    Text('Available')
+  ],
+),
+Row(
+  children: [
+    Checkbox(
+      value:hasFreeInternet,
+      onChanged: (value) {
+        setState(() {
+         hasFreeInternet= value!;
+        });
+      },
+    ),
+    Text('Free internet')
+  ],
+),
+
+*/
+
                 SizedBox(height: 20),
                 CustomTextField(
                   hint: 'Location',
@@ -272,6 +316,45 @@ class _AddHousePageState extends State<AddHousePage> {
                   child: Text('Pick Images'),
                 ),
 */
+        Row(
+  children: [
+    Checkbox(
+      value: isAvailable,
+      onChanged: (value) {
+        setState(() {
+          isAvailable = value!;
+        });
+      },
+    ),
+    Text('Available')
+  ],
+),
+Row(
+  children: [
+    Checkbox(
+      value:hasFreeInternet,
+      onChanged: (value) {
+        setState(() {
+         hasFreeInternet= value!;
+        });
+      },
+    ),
+    Text('Free internet')
+  ],
+),
+
+
+    TextFormField(
+                  decoration: InputDecoration(
+                    labelText: 'Additional Details (optional)',
+                   // hintText: 'Include any extra details of the house , for example if it has free internet or not or any details ',
+                   hintText: 'Include any extra details of the house',
+
+                  ),
+                  controller: additionalDetailsController,
+                  maxLines: 3,
+                ),
+               SizedBox(height:40),
               Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
@@ -308,8 +391,18 @@ class _AddHousePageState extends State<AddHousePage> {
                     ),
                   ),
                 SizedBox(height: 30),
+/*
+                 TextFormField(
+                  decoration: InputDecoration(
+                    labelText: 'Additional Details (optional)',
+                   // hintText: 'Include any extra details of the house , for example if it has free internet or not or any details ',
+                   hintText: 'Include any extra details of the house',
 
-
+                  ),
+                  controller: additionalDetailsController,
+                  maxLines: 3,
+                ),*/
+                SizedBox(height: 20),
                 SizedBox(height: 20),
                 Center(
                   child: ElevatedButton(
