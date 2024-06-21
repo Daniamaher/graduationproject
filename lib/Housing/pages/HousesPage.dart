@@ -711,6 +711,8 @@ class _HousingPageState extends State<HousingPage> {
                   bathrooms: houseData['numBathrooms'] ?? 0,
                   houseId: houseDocs[index].id,
                   latitude:houseData['latitude'] , longitude: houseData['longitude'], location: houseData['location']??'', isAvailable: houseData['isAvailable']??'', hasFreeInternet: houseData['hasFreeInternet']??'',
+                  additionalDetails:houseData['additionalDetails'] ?? '' ,
+
                    
                 );
               },

@@ -34,9 +34,11 @@ class _EditBookPageState extends State<EditBookPage> {
     print('initState - bookData: ${widget.bookData}');
     bookNameController.text = widget.bookData['bookName'];
     bookPriceController.text = widget.bookData['bookPrice'];
-    additionalDetailsController.text = widget.bookData['additionalDetails'] ?? '';
+    additionalDetailsController.text = widget.bookData['additionalDetails'] ?? 'additional details';
     imageUrls = List<String>.from(widget.bookData['imageUrls']);
     bookStatus = widget.bookData['bookStatus'] ?? 'New';
+    print("jgggggggggggggggggggggggggggggggggggggggggggg");
+    print(widget.bookData['additionalDetails'] );
     print('initState - bookNameController: ${bookNameController.text}');
     print('initState - bookPriceController: ${bookPriceController.text}');
     print('initState - additionalDetailsController: ${additionalDetailsController.text}');

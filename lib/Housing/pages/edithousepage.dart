@@ -346,7 +346,7 @@ class _EditHousePageState extends State<EditHousePage> {
   final TextEditingController numOccupantsController = TextEditingController();
   
   final TextEditingController emailController = TextEditingController();
-  final TextEditingController additionalDetailsController = TextEditingController();
+  final TextEditingController additionalDetailsController1 = TextEditingController();
 
   bool isAvailable = false;
 bool hasFreeInternet = false;
@@ -368,7 +368,7 @@ bool hasFreeInternet = false;
     imageUrls = List<String>.from(widget.houseData['imageUrls'] ?? []);
     isAvailable = widget.houseData['isAvailable'] ?? false;
   hasFreeInternet = widget.houseData['hasFreeInternet'] ?? false;
-    additionalDetailsController.text = widget.houseData['additionalDetails'] ?? '';
+    additionalDetailsController1.text = widget.houseData['additionalDetails'] ;
 
   }
 
@@ -554,13 +554,13 @@ bool hasFreeInternet = false;
     ),
     SizedBox(height: 20),
     TextFormField(
-        controller: additionalDetailsController,
+        controller: additionalDetailsController1,
 
       decoration: InputDecoration(
         labelText: 'Additional Details (optional)',
         hintText: 'Include any extra details of the house',
       ),
-      initialValue: widget.houseData['additionalDetails'] ?? '',
+     // initialValue: widget.houseData['additionalDetails'] ?? '',
       onChanged: (value) {
         // Update the additional details as they type
         widget.houseData['additionalDetails'] = value;
@@ -693,8 +693,9 @@ bool hasFreeInternet = false;
             'imageUrls': imageUrls,
               'isAvailable': isAvailable,
           'hasFreeInternet': hasFreeInternet,
+
           //'additionalDetails': widget.houseData['additionalDetails'] ?? '',
-            'additionalDetails': additionalDetailsController.text,
+            'additionalDetails': additionalDetailsController1.text,
 
           };
 
@@ -739,6 +740,7 @@ bool hasFreeInternet = false;
     numBathroomsController.dispose();
     numOccupantsController.dispose();
     emailController.dispose();
+    additionalDetailsController1.dispose();
     super.dispose();
   }
 }

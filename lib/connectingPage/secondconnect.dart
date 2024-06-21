@@ -24,7 +24,7 @@ class Secondconnect extends StatelessWidget {
             padding: EdgeInsets.symmetric(vertical: 50),
             children: [
               SizedBox(height: 100),
-              buildButton(context, 'images/t4 (1).jpg', 'Toutring', "Fitring"),
+              buildButton(context, 'images/t4 (1).jpg', 'Tutoring', "Fitring"),
               // SizedBox(height: 30),
               buildButton(
                   context, 'images/g2 (1).jpg', 'Study With Me', 'VotedList'),

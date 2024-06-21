@@ -37,7 +37,11 @@ import 'package:provider/provider.dart';
 import 'package:flutter_application_1/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'exchangebook/exchangebookpage.dart';
+
+
 void main() async {
+
+ 
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(
@@ -49,11 +53,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'House Owner Login',
+      title: 'ease your uni life',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      initialRoute: 'houseownerloginpage',
+      initialRoute: '/StudentLoginPage',
       routes: {
           'houseownerloginpage': (context) => HouseOwnerLoginPage(),
         'houseownerregister': (context) => HouseOwnerRegistrationPage (),
@@ -98,6 +102,7 @@ class MyApp extends StatelessWidget {
 
 
       },
+
     );
   }
 }

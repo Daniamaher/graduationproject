@@ -78,6 +78,8 @@ class MyHousingPage extends StatelessWidget {
                   email: houseData['email'],
                   bathrooms: houseData['numBathrooms'], 
                    houseId: houseDocs[index].id, latitude:houseData['latitude'] , longitude: houseData['longitude'], location: houseData['location']??'', isAvailable: houseData['isAvailable'], hasFreeInternet: houseData['hasFreeInternet'],
+                         additionalDetails:houseData['additionalDetails']
+
                 );
               },
             );
@@ -102,9 +104,9 @@ class HouseItem extends StatelessWidget {
      final double latitude;
      final String  location;
      final double longitude;
-      
   final bool isAvailable;
   final bool hasFreeInternet; 
+final   String ? additionalDetails;
   const HouseItem({
     required this.houseName,
     required this.housePrice,
@@ -114,7 +116,7 @@ class HouseItem extends StatelessWidget {
     required this.gender,
     required this.email,
     required this.userId,
-    required this.bathrooms, required this.houseId, required this.latitude, required this.location, required this.longitude, required this.isAvailable, required this.hasFreeInternet,
+    required this.bathrooms, required this.houseId, required this.latitude, required this.location, required this.longitude, required this.isAvailable, required this.hasFreeInternet, this.additionalDetails,
   });
 
   @override
@@ -141,6 +143,7 @@ class HouseItem extends StatelessWidget {
                  latitude: latitude,
                 longitude: longitude,
                 location: location, isAvailable: isAvailable, hasFreeInternet:hasFreeInternet,
+                additionalDetails:additionalDetails??'no additional details'
                 
               ),
             ),

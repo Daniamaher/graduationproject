@@ -25,10 +25,12 @@ class _AddHousePageState extends State<AddHousePage> {
   final TextEditingController numBathroomsController = TextEditingController();
   final TextEditingController numOccupantsController = TextEditingController();
   final TextEditingController locationController = TextEditingController();
+
   double? latitude;
   double? longitude;
   final FirestoreService firestoreService = FirestoreService();
-  final TextEditingController additionalDetailsController = TextEditingController();
+  final TextEditingController additionalDetailsController1 = TextEditingController();
+  
   bool isAvailable = true;
   bool hasFreeInternet = false;
   List<String> imageUrls = [];
@@ -91,7 +93,7 @@ bool Notavailable=false;
         'isAvailable': isAvailable,
      'hasFreeInternet': hasFreeInternet,
   //'Notavailable':Notavailable,
-  'additionalDetails': additionalDetailsController.text.isNotEmpty ? additionalDetailsController.text : null,
+  'additionalDetails': additionalDetailsController1.text.isNotEmpty ? additionalDetailsController1.text : null,
 
       };
 
@@ -351,7 +353,7 @@ Row(
                    hintText: 'Include any extra details of the house',
 
                   ),
-                  controller: additionalDetailsController,
+                  controller: additionalDetailsController1,
                   maxLines: 3,
                 ),
                SizedBox(height:40),
