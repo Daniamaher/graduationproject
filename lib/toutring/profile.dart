@@ -34,6 +34,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
     super.initState();
     _user = FirebaseAuth.instance.currentUser!;
     profileImage = ''; // Initialize profileImage as empty
+    _loadUserProfile();
+  }
+
+  Future<void> _loadUserProfile() async {
+    final userData = await FirebaseFirestore.instance
+        .collection('Students')
+        .doc(_user.uid)
+        .get()
+        .then((snapshot) => snapshot.data() as Map<String, dynamic>?);
+
+    if (userData != null) {
+      setState(() {
+        profileImage = userData['profileImageUrl'] ??
+            (userData['gender'] == 'Male'
+                ? 'https://i.pinimg.com/564x/22/ce/12/22ce126b77afdd24a5994ecb51736887.jpg'
+                : 'https://i.pinimg.com/736x/8b/1f/9f/8b1f9f145889835124f968a6aa82b79f.jpg');
+      });
+    }
   }
 
   Future<void> _uploadImage(List<XFile> files) async {
@@ -55,7 +73,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       await FirebaseFirestore.instance
           .collection('Students')
           .doc(_user.uid)
-          .set({'profileImageUrl': defaultImageUrl});
+          .set({'profileImageUrl': defaultImageUrl}, SetOptions(merge: true));
 
       setState(() {
         profileImage = defaultImageUrl;
@@ -122,11 +140,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             return Center(child: Text('User data not found'));
           }
 
-          // Check if user has a profile image URL, otherwise use default image based on gender
-          var profileImageUrl = userData['profileImageUrl'];
-
-          profileImage =
-              profileImageUrl; // Set profileImage to the URL from Firestore
+          var profileImageUrl = userData['profileImageUrl'] ?? profileImage;
 
           return SizedBox(
             width: double.infinity,
@@ -138,7 +152,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   // Display profile image
                   CircleAvatar(
                     radius: 50,
-                    backgroundImage: NetworkImage(profileImage),
+                    backgroundImage: NetworkImage(profileImageUrl),
                   ),
                   ElevatedButton(
                     onPressed: () async {
@@ -205,10 +219,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             Icons.email, "Email", userData['email'] ?? 'N/A'),
                         listProfile(Icons.phone, "Phone Number",
                             userData['phoneNumber'] ?? 'N/A'),
-                        /*
-                        listProfile(Icons.female, "Gender",
-                            userData['gender'] ?? 'N/A'),*/
-
                         if (userData['gender'] == "Female")
                           listProfile(Icons.female, "Gender",
                               userData['gender'] ?? 'N/A'),

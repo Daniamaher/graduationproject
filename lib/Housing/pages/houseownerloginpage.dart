@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Housing/pages/HouseOwnerRegistrationPage.dart';
 import 'package:flutter_application_1/Housing/pages/HousesPage.dart';
 import 'package:flutter_application_1/Housing/pages/widgets/customTextField.dart';
+import 'package:flutter_application_1/authForStudent/ResetPasswordPage.dart';
 import 'package:flutter_application_1/constant.dart';
 
 class HouseOwnerLoginPage extends StatefulWidget {
@@ -113,6 +114,28 @@ class _HouseOwnerLoginPageState extends State<HouseOwnerLoginPage> {
                 hint: 'Password',
                 controller: passwordController,
                 obscureText: true,
+              ),
+
+
+
+
+                SizedBox(height: 15),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ResetPasswordPage()),
+                        );
+                      },
+                      child: Text(
+                        "Forgot password?",
+                        style: TextStyle(color: Colors.white),
+                      )),
+                ],
               ),
               SizedBox(height: 40),
               Center(

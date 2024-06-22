@@ -102,7 +102,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                               borderRadius: BorderRadius.circular(5),
                             ),
                             backgroundColor:
-                                Colors.transparent, // Transparent background
+                                Colors.transparent, 
                           ),
                           onPressed: _resetPassword,
                           child: Ink(

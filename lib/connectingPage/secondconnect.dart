@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Cstum/menu.dart';
 import 'package:flutter_application_1/Cstum/widgitforconnect.dart';
 import 'package:flutter_application_1/constant.dart';
-
 class Secondconnect extends StatelessWidget {
   const Secondconnect({Key? key});
 
@@ -24,10 +23,10 @@ class Secondconnect extends StatelessWidget {
             padding: EdgeInsets.symmetric(vertical: 50),
             children: [
               SizedBox(height: 100),
-              buildButton(context, 'images/t4 (1).jpg', 'Tutoring', "Fitring"),
+              buildButton(context, 'images/t4.jpg', 'Tutoring', "Fitring"),
               // SizedBox(height: 30),
               buildButton(
-                  context, 'images/g2 (1).jpg', 'Study With Me', 'VotedList'),
+                  context, 'images/g2.jpg', 'Study With Me', 'VotedList'),
             ],
           ),
         ),

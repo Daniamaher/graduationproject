@@ -50,6 +50,7 @@ dependencies:
   google_maps_flutter: ^2.7.0
   percent_indicator: ^4.2.3
   google_fonts: ^6.2.1
+  flutter_staggered_animations: ^1.1.1
 
 
 dev_dependencies:
@@ -79,6 +80,7 @@ flutter:
     - images/imageicon.png
     - images/g2 (1).jpg
     - images/t4 (1).jpg
+    - images/r1-removebg-preview.png
     - images/1.jpg
     - images/e2.jpg
     - images/y2.jpg

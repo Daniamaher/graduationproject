@@ -17,6 +17,7 @@ import 'package:flutter_application_1/authForStudent/ResetPasswordPage.dart';
 import 'package:flutter_application_1/authForStudent/Verify.dart';
 import 'package:flutter_application_1/authForStudent/studentLoginPag.dart';
 import 'package:flutter_application_1/authForStudent/studentRegistrationPage.dart';
+import 'package:flutter_application_1/connectingPage/Welcomepage.dart';
 import 'package:flutter_application_1/connectingPage/firstconnetc.dart';
 import 'package:flutter_application_1/connectingPage/secondconnect.dart';
 import 'package:flutter_application_1/poll/CreateVoteForm.dart';
@@ -55,7 +56,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      initialRoute: '/StudentLoginPage',
+      initialRoute: 'Welcomepage',
       routes: {
           'houseownerloginpage': (context) => HouseOwnerLoginPage(),
         'houseownerregister': (context) => HouseOwnerRegistrationPage (),
@@ -99,6 +100,7 @@ class MyApp extends StatelessWidget {
         'CreateVoteForm': (context) => CreateVoteForm(),
         'VotedList': (context) => VotedList(),
                     'exchange': (context) => ExchangeBookPage(),
+                             "Welcomepage": (context) => Welcomepage()
 
 
       },

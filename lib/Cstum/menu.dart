@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/authForStudent/studentLoginPag.dart';
+import 'package:flutter_application_1/connectingPage/Welcomepage.dart';
 import 'package:flutter_application_1/connectingPage/firstconnetc.dart';
 import 'package:flutter_application_1/toutring/Setting.dart';
 import 'package:flutter_application_1/toutring/profile.dart';
@@ -135,7 +136,7 @@ class _MenuState extends State<Menu> {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute<void>(
-                      builder: (BuildContext context) => StudentLoginPage(),
+                      builder: (BuildContext context) => Welcomepage(),
                     ),
                   );
                 },

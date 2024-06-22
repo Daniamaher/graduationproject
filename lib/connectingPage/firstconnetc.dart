@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Cstum/menu.dart';
 import 'package:flutter_application_1/Cstum/widgitforconnect.dart';
 import 'package:flutter_application_1/constant.dart';
-
 class Firstconnet extends StatelessWidget {
   const Firstconnet({Key? key});
 
@@ -24,10 +23,11 @@ class Firstconnet extends StatelessWidget {
             padding: EdgeInsets.symmetric(vertical: 50),
             children: [
               //  SizedBox(height: 100),
-              buildButton(context, 'images/1.jpg', 'Housing', "houses"),
+              buildButton(context, 'images/1.jpg', 'Housing', '/houses'),
               //  SizedBox(height: 30),
               buildButton(
-                  context, 'images/e2.jpg', 'Exchang Book', 'CollegeListPage'),
+                  context, 'images/e2.jpg', 'Exchange Book', 'CollegeListPage'),
+              //'CollegeListPage'),
               buildButton(
                   context, 'images/y2.jpg', "Let's Study", 'Secondconnect')
             ],
