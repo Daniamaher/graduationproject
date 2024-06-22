@@ -6,7 +6,8 @@ import 'package:flutter_application_1/authForStudent/studentLoginPag.dart';
 import 'package:flutter_application_1/connectingPage/firstconnetc.dart';
 import 'package:flutter_application_1/toutring/Setting.dart';
 import 'package:flutter_application_1/toutring/profile.dart';
-import 'package:flutter_application_1/toutring/studentLoginPage.dart';
+
+
 
 class Menu extends StatefulWidget {
   const Menu({Key? key}) : super(key: key);

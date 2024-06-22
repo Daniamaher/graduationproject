@@ -28,11 +28,9 @@ import 'package:flutter_application_1/toutring/TechingOrNot.dart';
 import 'package:flutter_application_1/toutring/WanttoTech.dart';
 import 'package:flutter_application_1/toutring/filtering.dart';
 import 'package:flutter_application_1/toutring/homepage.dart';
-import 'package:flutter_application_1/toutring/menu.dart';
 import 'package:flutter_application_1/toutring/profile.dart';
-import 'package:flutter_application_1/toutring/studentLoginPage.dart';
-import 'package:flutter_application_1/toutring/studentRegistrationPage.dart';
-import 'package:flutter_application_1/toutring/verifystudent.dart';
+
+
 import 'package:provider/provider.dart';
 import 'package:flutter_application_1/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -73,6 +71,7 @@ class MyApp extends StatelessWidget {
             StudentsWhoWantToTeachScreen(),
         'VerifyStudentScreen' :(context) => VerifyStusentScreen (),
         'TeachOrNotScreen' :(context) => TeachOrNotScreen(),
+
                       ' AddBookPage' :(context) =>  AddBookPage(),
                       ' DepartmentListPage' :(context) =>  DepartmentListPage(),
               'CollegeListPage' :(context) => CollegeListPage(),
@@ -99,6 +98,7 @@ class MyApp extends StatelessWidget {
                         'VotingScreen': (context) => VotingScreen(),
         'CreateVoteForm': (context) => CreateVoteForm(),
         'VotedList': (context) => VotedList(),
+                    'exchange': (context) => ExchangeBookPage(),
 
 
       },
@@ -106,3 +106,5 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+
