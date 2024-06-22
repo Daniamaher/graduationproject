@@ -81,16 +81,11 @@ class _EditBookPageState extends State<EditBookPage> {
 
       List<String> uploadedImageUrls = await _uploadImages();
 
-      // Combine existing and new image URLs
       List<String> finalImageUrls = List.from(imageUrls)..addAll(uploadedImageUrls);
 
       User? currentUser = FirebaseAuth.instance.currentUser;
       if (currentUser != null) {
-        // Debug information before updating Firestore
-        /*
-        String collegeId = widget.bookData['collegeId'];
-        String departmentId = widget.bookData['departmentId'];
-        String bookId = widget.bookData['id'];*/
+     
         String collegeId = widget.bookData['collegeId'] ?? '';
 String departmentId = widget.bookData['departmentId'] ?? '';
 String bookId = widget.bookData['bookId']?? '';
@@ -300,24 +295,18 @@ String bookId = widget.bookData['bookId']?? '';
 class FirestoreService {
   Future<String> uploadImage(File imageFile) async {
     try {
-      // Generate a unique ID for the image
       String imageName = DateTime.now().millisecondsSinceEpoch.toString();
 
-      // Reference to the Firebase Storage bucket
       Reference storageReference =
           FirebaseStorage.instance.ref().child('booksimages/$imageName');
 
-      // Upload the image file to Firebase Storage
       UploadTask uploadTask = storageReference.putFile(imageFile);
 
-      // Get the download URL of the uploaded image
       TaskSnapshot taskSnapshot = await uploadTask.whenComplete(() => null);
       String imageUrl = await taskSnapshot.ref.getDownloadURL();
 
-      // Return the URL of the uploaded image
       return imageUrl;
     } catch (error) {
-      // Handle any errors that occur during the upload process
       print('Error uploading image: $error');
       throw error;
     }

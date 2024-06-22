@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_application_1/ExchangeBook/addbookpage.dart';
@@ -10,7 +9,8 @@ class ExchangeBookPage extends StatefulWidget {
   final String? collegeId;
   final String? departmentId;
 
-  ExchangeBookPage({Key? key, this.collegeId, this.departmentId}) : super(key: key);
+  ExchangeBookPage({Key? key, this.collegeId, this.departmentId})
+      : super(key: key);
 
   @override
   _ExchangeBookPageState createState() => _ExchangeBookPageState();
@@ -33,8 +33,7 @@ class _ExchangeBookPageState extends State<ExchangeBookPage> {
   }
 
   void _onSearchChanged() {
-    setState(() {
-    });
+    setState(() {});
   }
 
   @override
@@ -42,18 +41,12 @@ class _ExchangeBookPageState extends State<ExchangeBookPage> {
     return Scaffold(
       backgroundColor: kPrimaryColor,
       appBar: AppBar(
-    backgroundColor: kPrimaryColor,
-
-
-
-
-
-           
-                iconTheme: IconThemeData(color: ksecondaryColor),
-
-        title: Text('Books ',style: TextStyle(color:ksecondaryColor ),),
-
-      
+        backgroundColor: kPrimaryColor,
+        iconTheme: IconThemeData(color: ksecondaryColor),
+        title: Text(
+          'Books ',
+          style: TextStyle(color: ksecondaryColor),
+        ),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.add),
@@ -78,39 +71,32 @@ class _ExchangeBookPageState extends State<ExchangeBookPage> {
           ////////////////
           Padding(
             padding: const EdgeInsets.all(8.0),
-  
-  child: Container(
-    decoration: BoxDecoration(
-      color: Colors.white, 
-    borderRadius: BorderRadius.circular(30.0), 
-    boxShadow: [
-      BoxShadow(
-        color: Colors.black26,
-        blurRadius: 10.0,
-        offset: Offset(0, 4),
-      ),
-    ],
-    ),
-    child: TextField(
-      controller: searchController,
-      decoration: InputDecoration(
-        hintText: 'Search by book name',
-        hintStyle: TextStyle(color: kPrimaryColor),
-        border: InputBorder.none,
-        prefixIcon: Icon(Icons.search, color: kPrimaryColor),
-        contentPadding: EdgeInsets.symmetric(vertical: 15.0),
-        isDense: true,
-      ),
-      style: TextStyle(color: Colors.black),
-    ),
-  ),
-),
-
-
-
-
-
-
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(30.0),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black26,
+                    blurRadius: 10.0,
+                    offset: Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: TextField(
+                controller: searchController,
+                decoration: InputDecoration(
+                  hintText: 'Search by book name',
+                  hintStyle: TextStyle(color: kPrimaryColor),
+                  border: InputBorder.none,
+                  prefixIcon: Icon(Icons.search, color: kPrimaryColor),
+                  contentPadding: EdgeInsets.symmetric(vertical: 15.0),
+                  isDense: true,
+                ),
+                style: TextStyle(color: Colors.black),
+              ),
+            ),
+          ),
 
           Expanded(
             child: StreamBuilder<QuerySnapshot>(
@@ -135,14 +121,14 @@ class _ExchangeBookPageState extends State<ExchangeBookPage> {
                   return Center(child: Text('No books found'));
                 }
 
-                // Filter books based on search text
                 List<QueryDocumentSnapshot> filteredBooks = snapshot.data!.docs;
                 if (searchController.text.isNotEmpty) {
-                  filteredBooks = snapshot.data!.docs.where((book) =>
-                      book['bookName']
+                  filteredBooks = snapshot.data!.docs
+                      .where((book) => book['bookName']
                           .toString()
                           .toLowerCase()
-                          .contains(searchController.text.toLowerCase())).toList();
+                          .contains(searchController.text.toLowerCase()))
+                      .toList();
                 }
 
                 return GridView.builder(
@@ -154,11 +140,9 @@ class _ExchangeBookPageState extends State<ExchangeBookPage> {
                   itemCount: filteredBooks.length,
                   itemBuilder: (context, index) {
                     final book = filteredBooks[index];
-                    List<dynamic> imageUrlsDynamic =
-                        book['imageUrls'] ?? [];
-                    List<String> imageUrls = imageUrlsDynamic
-                        .map((url) => url.toString())
-                        .toList();
+                    List<dynamic> imageUrlsDynamic = book['imageUrls'] ?? [];
+                    List<String> imageUrls =
+                        imageUrlsDynamic.map((url) => url.toString()).toList();
 
                     String bookId = book.id;
 
@@ -172,8 +156,7 @@ class _ExchangeBookPageState extends State<ExchangeBookPage> {
                               bookPrice: book['bookPrice'],
                               imageUrls: imageUrls,
                               email: book['email'],
-                              additionalDetails:
-                                  book['additionalDetails'],
+                              additionalDetails: book['additionalDetails'],
                               bookStatus: book['bookStatus'],
                               bookId: bookId,
                               collegeId: widget.collegeId,
@@ -190,8 +173,7 @@ class _ExchangeBookPageState extends State<ExchangeBookPage> {
                           bookPrice: book['bookPrice'],
                           imageUrls: imageUrls,
                           email: book['email'],
-                          additionalDetails:
-                              book['additionalDetails'],
+                          additionalDetails: book['additionalDetails'],
                           bookStatus: book['bookStatus'],
                           bookId: bookId,
                           collegeId: widget.collegeId,

@@ -3,10 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/ExchangeBook/exchangebookpage.dart';
 import 'package:flutter_application_1/constant.dart';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_application_1/ExchangeBook/exchangebookpage.dart';
-import 'package:flutter_application_1/constant.dart';
 
 class DepartmentListPage extends StatelessWidget {
   final String? collegeId;
@@ -38,10 +34,10 @@ class DepartmentListPage extends StatelessWidget {
           final departments = snapshot.data!.docs;
           return GridView.builder(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2, // Number of items per row
+              crossAxisCount: 2, 
               crossAxisSpacing: 8.0,
               mainAxisSpacing: 8.0,
-              childAspectRatio: 0.9, // Adjust the aspect ratio as needed
+              childAspectRatio: 0.9, 
             ),
             itemCount: departments.length,
             itemBuilder: (context, index) {
@@ -68,7 +64,7 @@ class DepartmentListPage extends StatelessWidget {
                       children: [
                 
                         Container(
-                          height: 150.0, // Adjust as needed for image height
+                          height: 150.0, 
                           child: Image.asset(
                             'images/Free Photo _ 3d render books fly or fall on blue background.jpg',
                             fit: BoxFit.cover,

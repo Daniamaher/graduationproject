@@ -560,9 +560,7 @@ bool hasFreeInternet = false;
         labelText: 'Additional Details (optional)',
         hintText: 'Include any extra details of the house',
       ),
-     // initialValue: widget.houseData['additionalDetails'] ?? '',
       onChanged: (value) {
-        // Update the additional details as they type
         widget.houseData['additionalDetails'] = value;
       },
       maxLines: 3,
@@ -694,7 +692,6 @@ bool hasFreeInternet = false;
               'isAvailable': isAvailable,
           'hasFreeInternet': hasFreeInternet,
 
-          //'additionalDetails': widget.houseData['additionalDetails'] ?? '',
             'additionalDetails': additionalDetailsController1.text,
 
           };

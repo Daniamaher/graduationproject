@@ -6,10 +6,6 @@ import 'package:flutter_application_1/authForStudent/ResetPasswordPage.dart';
 import 'package:flutter_application_1/authForStudent/studentRegistrationPage.dart';
 import 'package:flutter_application_1/connectingPage/firstconnetc.dart';
 import 'package:flutter_application_1/constant.dart';
-
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-
 class StudentLoginPage extends StatefulWidget {
   const StudentLoginPage({Key? key}) : super(key: key);
 
@@ -29,7 +25,6 @@ class _StudentLoginPageState extends State<StudentLoginPage> {
         return;
       }
 
-      // Check if email is from the ".edu.jo" domain
       if (!emailController.text.trim().endsWith('.edu.jo')) {
         showErrorDialog('Email must be from the ".edu.jo" domain.');
         return;

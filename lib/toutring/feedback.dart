@@ -10,7 +10,6 @@ Future<void> _showFeedbackDialog(BuildContext context, String subject) async {
 
   final User? user = FirebaseAuth.instance.currentUser;
   if (user == null) {
-    // Handle user not signed in
     return;
   }
 
@@ -57,7 +56,6 @@ Future<void> _showFeedbackDialog(BuildContext context, String subject) async {
           ),
           TextButton(
             onPressed: () async {
-              // Save feedback and rating to Firestore
               await FirebaseFirestore.instance.collection('Feedback').add({
                 'auth': user.uid,
                 'subject': subject,

@@ -1,20 +1,14 @@
 import 'dart:io';
-//import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/ExchangeBook/exchangebookpage.dart';
-import 'package:flutter_application_1/Housing/pages/addhousepage.dart';
-import 'package:flutter_application_1/Housing/pages/widgets/customTextField.dart';
-import 'package:flutter_application_1/Housing/pages/widgets/custom_button.dart';
+
 import 'package:flutter_application_1/constant.dart';
 
 import 'package:image_picker/image_picker.dart';
-import 'package:path/path.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/painting.dart';
-import 'package:provider/provider.dart';
 
 class AddBookPage extends StatefulWidget {
   final String? collegeId;
@@ -73,7 +67,7 @@ class _AddBookPageState extends State<AddBookPage> {
 
     User? currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser != null) {
-      // Generate a new document ID
+      
       DocumentReference docRef = FirebaseFirestore.instance
           .collection('Colleges')
           .doc(widget.collegeId)
@@ -89,7 +83,7 @@ class _AddBookPageState extends State<AddBookPage> {
         'bookName': bookNameController.text,
         'bookPrice': bookPriceController.text,
         'imageUrls': uploadedImageUrls,
-        'email': currentUser.email, // Use authenticated user's email
+        'email': currentUser.email, 
         'userId': currentUser.uid,
         'bookStatus': bookStatus,
         'additionalDetails': additionalDetailsController.text,
@@ -106,7 +100,7 @@ class _AddBookPageState extends State<AddBookPage> {
       additionalDetailsController.clear();
       setState(() {
         imageUrls.clear();
-        bookStatus = 'New';  // Reset status
+        bookStatus = 'New';  
       });
     }
   }
@@ -271,24 +265,18 @@ class _AddBookPageState extends State<AddBookPage> {
 class FirestoreService {
   Future<String> uploadImage(File imageFile) async {
     try {
-      // Generate a unique ID for the image
       String imageName = DateTime.now().millisecondsSinceEpoch.toString();
 
-      // Reference to the Firebase Storage bucket
       Reference storageReference =
           FirebaseStorage.instance.ref().child('booksimages/$imageName');
 
-      // Upload the image file to Firebase Storage
       UploadTask uploadTask = storageReference.putFile(imageFile);
 
-      // Get the download URL of the uploaded image
       TaskSnapshot taskSnapshot = await uploadTask.whenComplete(() => null);
       String imageUrl = await taskSnapshot.ref.getDownloadURL();
 
-      // Return the URL of the uploaded image
       return imageUrl;
     } catch (error) {
-      // Handle any errors that occur during the upload process
       print('Error uploading image: $error');
       throw error;
     }

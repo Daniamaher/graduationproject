@@ -10,15 +10,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'dart:io';
 
-import 'package:path/path.dart' as p;
-
-import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -33,7 +25,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     super.initState();
     _user = FirebaseAuth.instance.currentUser!;
-    profileImage = ''; // Initialize profileImage as empty
+    profileImage = ''; 
     _loadUserProfile();
   }
 
@@ -162,7 +154,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       if (pickedFile != null) {
                         _uploadImage([
                           pickedFile
-                        ]); // Pass pickedFile in a list to _uploadImage
+                        ]); 
                       }
                     },
                     child: Icon(

@@ -6,10 +6,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 
-// MarkerMapPage for selecting location on the map
 class MarkerMapPage extends StatefulWidget {
   final Function(LatLng) onLocationSelected;
 
@@ -21,7 +18,7 @@ class MarkerMapPage extends StatefulWidget {
 
 class _MarkerMapPageState extends State<MarkerMapPage> {
   late GoogleMapController _controller;
-  LatLng jordanLocation = LatLng(31.9632, 35.9304); // Jordan's coordinates
+  LatLng jordanLocation = LatLng(31.9632, 35.9304); 
 
   Set<Marker> _markers = {};
   bool _autoZoomEnabled = false;
@@ -82,7 +79,6 @@ class _MarkerMapPageState extends State<MarkerMapPage> {
       LatLng position =
           LatLng(locations.first.latitude, locations.first.longitude);
 
-      // Zoom to the location
       _controller.animateCamera(CameraUpdate.newLatLngZoom(position, 15.0));
     } catch (e) {
       print('Error searching for location: $e');
@@ -104,16 +100,16 @@ class _MarkerMapPageState extends State<MarkerMapPage> {
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop(); // Close the dialog
+                Navigator.of(context).pop(); 
               },
               child: Text("Cancel"),
             ),
             TextButton(
               onPressed: () {
-                _addMarker(position); // Add the marker
-                Navigator.of(context).pop(); // Close the dialog
+                _addMarker(position); 
+                Navigator.of(context).pop(); 
 
-                // Auto-zoom if enabled
+             
                 if (_autoZoomEnabled) {
                   _controller.animateCamera(
                       CameraUpdate.newLatLngZoom(position, 15.0));
@@ -131,19 +127,17 @@ class _MarkerMapPageState extends State<MarkerMapPage> {
     final String markerIdVal = 'marker';
     final MarkerId markerId = MarkerId(markerIdVal);
 
-    // Clear existing markers
+    
     setState(() {
       _markers.clear();
     });
 
-    // Create a new marker
     final Marker marker = Marker(
       markerId: markerId,
       position: position,
       infoWindow: InfoWindow(title: 'Marker'),
     );
 
-    // Add the new marker
     setState(() {
       _markers.add(marker);
     });
@@ -156,7 +150,6 @@ class _MarkerMapPageState extends State<MarkerMapPage> {
   }
 }
 
-// SearchBar widget for location search and auto-zoom toggle
 class SearchBar extends StatefulWidget {
   final Function(String) onSearch;
   final Function(bool) onToggleAutoZoom;
@@ -192,7 +185,7 @@ class _SearchBarState extends State<SearchBar> {
                     border: InputBorder.none,
                   ),
                   textDirection:
-                      TextDirection.rtl, // Set text direction to right-to-left
+                      TextDirection.rtl, 
                 ),
               ),
               IconButton(

@@ -19,16 +19,16 @@ class GenderDropdownButton extends StatelessWidget {
       menuMaxHeight: 100,
       decoration: InputDecoration(
         filled: true,
-        fillColor: Colors.white, // Change the fill color to white
+        fillColor: Colors.white, 
         contentPadding: EdgeInsets.symmetric(vertical: 2, horizontal: 20),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(
-              20), // Use the same border radius as CustomTextField
+              20), 
           borderSide: BorderSide(color: Colors.black),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(
-              20), // Use the same border radius as CustomTextField
+              20), 
           borderSide: BorderSide(color: Colors.black),
         ),
       ),

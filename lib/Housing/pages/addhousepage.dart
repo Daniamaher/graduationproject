@@ -1,6 +1,3 @@
-
-
-
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -29,13 +26,14 @@ class _AddHousePageState extends State<AddHousePage> {
   double? latitude;
   double? longitude;
   final FirestoreService firestoreService = FirestoreService();
-  final TextEditingController additionalDetailsController1 = TextEditingController();
-  
+  final TextEditingController additionalDetailsController1 =
+      TextEditingController();
+
   bool isAvailable = true;
   bool hasFreeInternet = false;
   List<String> imageUrls = [];
   String? selectedGender;
-bool Notavailable=false;
+  bool Notavailable = false;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   Future<void> _pickImages() async {
@@ -57,8 +55,6 @@ bool Notavailable=false;
     }
   }
 
-
-
   void _addHouse() async {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
@@ -67,7 +63,8 @@ bool Notavailable=false;
         File imageFile = File(imagePath);
         if (imageFile.existsSync()) {
           try {
-            String uploadedImageUrl = await firestoreService.uploadImage(imageFile);
+            String uploadedImageUrl =
+                await firestoreService.uploadImage(imageFile);
             uploadedImageUrls.add(uploadedImageUrl);
           } catch (error) {
             print('Error uploading image: $error');
@@ -91,10 +88,11 @@ bool Notavailable=false;
         'latitude': latitude,
         'longitude': longitude,
         'isAvailable': isAvailable,
-     'hasFreeInternet': hasFreeInternet,
-  //'Notavailable':Notavailable,
-  'additionalDetails': additionalDetailsController1.text.isNotEmpty ? additionalDetailsController1.text : null,
-
+        'hasFreeInternet': hasFreeInternet,
+        //'Notavailable':Notavailable,
+        'additionalDetails': additionalDetailsController1.text.isNotEmpty
+            ? additionalDetailsController1.text
+            : null,
       };
 
       await firestoreService.addHouse(user.uid, houseData);
@@ -107,8 +105,7 @@ bool Notavailable=false;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: kPrimaryColor,
-                iconTheme: IconThemeData(color: Colors.white),
-
+        iconTheme: IconThemeData(color: Colors.white),
         title: Text(
           'Add House',
           style: TextStyle(color: Colors.white),
@@ -190,8 +187,7 @@ bool Notavailable=false;
                     }
                   },
                 ),
-                                SizedBox(height: 20),
-
+                SizedBox(height: 20),
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
@@ -223,64 +219,31 @@ bool Notavailable=false;
                           value: 'female',
                           child: Text(
                             'Female',
-                            style: TextStyle(color: const Color.fromARGB(255, 98, 97, 97)),
+                            style: TextStyle(
+                                color: const Color.fromARGB(255, 98, 97, 97)),
                           ),
                         ),
                         DropdownMenuItem(
                           value: 'male',
                           child: Text(
                             'Male',
-                            style: TextStyle(color: const Color.fromARGB(255, 98, 97, 97)),
+                            style: TextStyle(
+                                color: const Color.fromARGB(255, 98, 97, 97)),
                           ),
                         ),
                         DropdownMenuItem(
                           value: 'male and female',
                           child: Text(
                             'Male and female',
-                            style: TextStyle(color: const Color.fromARGB(255, 98, 97, 97)),
+                            style: TextStyle(
+                                color: const Color.fromARGB(255, 98, 97, 97)),
                           ),
                         ),
                       ],
                     ),
                   ),
                 ),
-
-
-
                 SizedBox(height: 20),
-
-/*
-
-
-             Row(
-  children: [
-    Checkbox(
-      value: isAvailable,
-      onChanged: (value) {
-        setState(() {
-          isAvailable = value!;
-        });
-      },
-    ),
-    Text('Available')
-  ],
-),
-Row(
-  children: [
-    Checkbox(
-      value:hasFreeInternet,
-      onChanged: (value) {
-        setState(() {
-         hasFreeInternet= value!;
-        });
-      },
-    ),
-    Text('Free internet')
-  ],
-),
-
-*/
-
                 SizedBox(height: 20),
                 CustomTextField(
                   hint: 'Location',
@@ -302,62 +265,54 @@ Row(
                     );
 
                     if (latitude != null && longitude != null) {
-                      List<Placemark> placemarks = await placemarkFromCoordinates(latitude!, longitude!);
+                      List<Placemark> placemarks =
+                          await placemarkFromCoordinates(latitude!, longitude!);
                       if (placemarks.isNotEmpty) {
                         Placemark place = placemarks[0];
-                        locationController.text =//"  ${place.subLocality} ,${place.locality},${place.country}";
-                          " ${place.subLocality}, ${place.locality}, ${place.country}";
+                        locationController.text =
+                            " ${place.subLocality}, ${place.locality}, ${place.country}";
                       }
                     }
                   },
                 ),
                 SizedBox(height: 20),
-                /*
-                ElevatedButton(
-                  onPressed: _pickImages,
-                  child: Text('Pick Images'),
+                Row(
+                  children: [
+                    Checkbox(
+                      value: isAvailable,
+                      onChanged: (value) {
+                        setState(() {
+                          isAvailable = value!;
+                        });
+                      },
+                    ),
+                    Text('Available')
+                  ],
                 ),
-*/
-        Row(
-  children: [
-    Checkbox(
-      value: isAvailable,
-      onChanged: (value) {
-        setState(() {
-          isAvailable = value!;
-        });
-      },
-    ),
-    Text('Available')
-  ],
-),
-Row(
-  children: [
-    Checkbox(
-      value:hasFreeInternet,
-      onChanged: (value) {
-        setState(() {
-         hasFreeInternet= value!;
-        });
-      },
-    ),
-    Text('Free internet')
-  ],
-),
-
-
-    TextFormField(
+                Row(
+                  children: [
+                    Checkbox(
+                      value: hasFreeInternet,
+                      onChanged: (value) {
+                        setState(() {
+                          hasFreeInternet = value!;
+                        });
+                      },
+                    ),
+                    Text('Free internet')
+                  ],
+                ),
+                TextFormField(
                   decoration: InputDecoration(
                     labelText: 'Additional Details (optional)',
-                   // hintText: 'Include any extra details of the house , for example if it has free internet or not or any details ',
-                   hintText: 'Include any extra details of the house',
-
+                    // hintText: 'Include any extra details of the house , for example if it has free internet or not or any details ',
+                    hintText: 'Include any extra details of the house',
                   ),
                   controller: additionalDetailsController1,
                   maxLines: 3,
                 ),
-               SizedBox(height:40),
-              Container(
+                SizedBox(height: 40),
+                Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
                   ),
@@ -393,17 +348,6 @@ Row(
                     ),
                   ),
                 SizedBox(height: 30),
-/*
-                 TextFormField(
-                  decoration: InputDecoration(
-                    labelText: 'Additional Details (optional)',
-                   // hintText: 'Include any extra details of the house , for example if it has free internet or not or any details ',
-                   hintText: 'Include any extra details of the house',
-
-                  ),
-                  controller: additionalDetailsController,
-                  maxLines: 3,
-                ),*/
                 SizedBox(height: 20),
                 SizedBox(height: 20),
                 Center(
@@ -421,19 +365,23 @@ Row(
   }
 }
 
-
-
 class FirestoreService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
 
   Future<void> addHouse(String userId, Map<String, dynamic> houseData) async {
-    await _firestore.collection('users').doc(userId).collection('houses').add(houseData);
+    await _firestore
+        .collection('users')
+        .doc(userId)
+        .collection('houses')
+        .add(houseData);
   }
 
   Future<String> uploadImage(File imageFile) async {
-    String fileName = 'images/${DateTime.now().millisecondsSinceEpoch.toString()}.jpg';
-    TaskSnapshot taskSnapshot = await _firebaseStorage.ref(fileName).putFile(imageFile);
+    String fileName =
+        'images/${DateTime.now().millisecondsSinceEpoch.toString()}.jpg';
+    TaskSnapshot taskSnapshot =
+        await _firebaseStorage.ref(fileName).putFile(imageFile);
     return await taskSnapshot.ref.getDownloadURL();
   }
 }
@@ -518,12 +466,3 @@ class CustomTextField extends StatelessWidget {
     );
   }
 }
-
-
-
-
-
-
-
-
-

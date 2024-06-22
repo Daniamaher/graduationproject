@@ -1,13 +1,4 @@
 
-
-
-
-
-
-
-
-
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/constant.dart';
@@ -41,13 +32,12 @@ class _VotedListState extends State<VotedList> {
             final time = doc['time'] as Timestamp?;
             if (time != null) {
               final remainingTime = time.toDate().difference(DateTime.now());
-              // Delete document if remaining time is zero or negative
               if (remainingTime.inSeconds <= 0) {
-                doc.reference.delete(); // Delete the document from Firestore
-                return false; // Filter out this document from the list
+                doc.reference.delete(); 
+                return false; 
               }
             }
-            return true; // Keep documents where time hasn't expired
+            return true; 
           }).toList(),
         );
   }
@@ -142,7 +132,6 @@ class _VotedListState extends State<VotedList> {
 
                 final votes = snapshot.data!;
 
-                // Apply filtering based on search and selected gender
                 final filteredVotes = votes.where((vote) {
                   final department =
                       vote['Department'].toString().toLowerCase();
@@ -182,7 +171,6 @@ class _VotedListState extends State<VotedList> {
                         ? remainingTime.inHours.remainder(24)
                         : 0;
 
-// Ensure remaining hours are within 0-23 range
                     remainingHours = remainingHours < 0 ? 0 : remainingHours;
 
                     return Padding(

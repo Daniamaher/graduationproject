@@ -26,7 +26,7 @@ Widget listProfile(IconData icon, String text1, String? text2) {
               ),
             ),
             Text(
-              text2 ?? '', // Display 'N/A' if text2 is null
+              text2 ?? '', 
               style: const TextStyle(
                 color: Color(0xFF111236),
                 fontFamily: "Montserrat",

@@ -305,7 +305,7 @@ class _StudentRegistrationPageState extends State<StudentRegistrationPage> {
                           } else if (_selectedDate == null) {
                             setState(() {
                               _isDateSelected =
-                                  false; // Set the boolean to false to show error message
+                                  false; 
                             });
                           }
                         },

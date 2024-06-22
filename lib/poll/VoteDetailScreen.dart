@@ -25,14 +25,13 @@ class _VoteDetailScreenState extends State<VoteDetailScreen> {
   late Stream<DocumentSnapshot> _voteStream;
   bool votedUp = false;
   bool votedDown = false;
-  late DateTime meetingTime = DateTime.now(); // Initialize with a default value
+  late DateTime meetingTime = DateTime.now(); 
 
   @override
   void initState() {
     super.initState();
     _voteStream = widget.voteRef.snapshots();
 
-    // Fetch meeting time from Firestore
     _voteStream.listen((snapshot) {
       if (snapshot.exists && snapshot.data() != null) {
         final Map<String, dynamic> voteData =
@@ -40,7 +39,6 @@ class _VoteDetailScreenState extends State<VoteDetailScreen> {
         final Timestamp timestamp = voteData['time'];
         meetingTime = timestamp.toDate();
 
-        // Update UI when meetingTime changes
         setState(() {});
       }
     });
@@ -57,11 +55,11 @@ class _VoteDetailScreenState extends State<VoteDetailScreen> {
       stream: _voteStream,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator(); // Show loading indicator while waiting for data
+          return CircularProgressIndicator(); 
         }
 
         if (!snapshot.hasData || snapshot.data!.data() == null) {
-          return Text('No data found'); // Show message if no data available
+          return Text('No data found'); 
         }
 
         final voteData = snapshot.data!.data() as Map<String, dynamic>;
@@ -324,19 +322,17 @@ class _VoteDetailScreenState extends State<VoteDetailScreen> {
 
     String userId = user.uid;
 
-    // Retrieve user's gender from Firestore
     DocumentSnapshot userDoc = await FirebaseFirestore.instance
         .collection('Students')
         .doc(userId)
         .get();
     Map<String, dynamic>? userData = userDoc.data() as Map<String,
-        dynamic>?; // Explicit cast to Map<String, dynamic> or null
+        dynamic>?; 
     String userGender = userData?['gender'] ?? 'Any';
 
     final voteDoc = await voteRef.get();
     final voteData = voteDoc.data() as Map<String, dynamic>;
 
-    // Check if the vote is restricted by gender
     String preferredGender = voteData['preferredGender'] ?? 'Any';
 
     if (preferredGender != 'Any' && userGender != preferredGender) {
@@ -346,7 +342,6 @@ class _VoteDetailScreenState extends State<VoteDetailScreen> {
       return;
     }
 
-    // Access previous vote
     final voters = voteData['voters'] as Map<String, dynamic>?;
 
     if (voters != null && voters.containsKey(userId)) {
@@ -361,7 +356,6 @@ class _VoteDetailScreenState extends State<VoteDetailScreen> {
       }
     }
 
-    // Update the UI
     setState(() {
       if (isUpVote) {
         votedUp = true;
@@ -372,7 +366,6 @@ class _VoteDetailScreenState extends State<VoteDetailScreen> {
       }
     });
 
-    // Update Firestore
     String voteField = isUpVote ? 'optionAVotes' : 'optionBVotes';
 
     final batch = FirebaseFirestore.instance.batch();

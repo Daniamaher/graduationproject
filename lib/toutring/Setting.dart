@@ -66,7 +66,6 @@ class SettingsPage extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => TeachOrEditScreen()
-                    // ChangeTeachingInfoScreen(auth: _auth),
                     ),
               );
             },
@@ -109,9 +108,7 @@ class SettingsPage extends StatelessWidget {
   }
 
   Future<void> _deleteAccount(String userId) async {
-    // Delete user's document from Firestore
     await _firestore.collection('Students').doc(userId).delete();
-    // Navigate back to previous screen or handle account deletion
   }
 }
 
@@ -336,12 +333,12 @@ class _ChangePhoneNumberScreenState extends State<ChangePhoneNumberScreen> {
     _auth = widget.auth;
     _fetchUserDetails();
     _newPhoneNumberController =
-        TextEditingController(); // Initialize controller
+        TextEditingController(); 
   }
 
   @override
   void dispose() {
-    _newPhoneNumberController.dispose(); // Dispose controller
+    _newPhoneNumberController.dispose(); 
     super.dispose();
   }
 
@@ -353,7 +350,7 @@ class _ChangePhoneNumberScreenState extends State<ChangePhoneNumberScreen> {
           'Change Phone Number',
           style: TextStyle(color: Colors.white),
         ),
-        backgroundColor: kPrimaryColor, // Replace with your desired color
+        backgroundColor: kPrimaryColor, 
         iconTheme: IconThemeData(color: Colors.white),
       ),
       body: Padding(
@@ -373,7 +370,6 @@ class _ChangePhoneNumberScreenState extends State<ChangePhoneNumberScreen> {
               controller: _newPhoneNumberController,
               onChanged: (value) {
                 setState(() {
-                  // Update _newPhoneNumber whenever text changes
                   _newPhoneNumber = value;
                 });
               },
@@ -926,10 +922,8 @@ class _TeachOrEditScreenState extends State<TeachOrEditScreen> {
   }
 
   void _toggleWantsToTeach(bool? value) async {
-    // Store the current state before showing the dialog
     bool previousValue = wantsToTeach;
 
-    // Show the confirmation dialog
     bool confirm = await showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -941,13 +935,13 @@ class _TeachOrEditScreenState extends State<TeachOrEditScreen> {
           actions: <Widget>[
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop(false); // User cancels
+                Navigator.of(context).pop(false); 
               },
               child: Text('Cancel'),
             ),
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop(true); // User confirms
+                Navigator.of(context).pop(true);
               },
               child: Text('Confirm'),
             ),
@@ -956,7 +950,6 @@ class _TeachOrEditScreenState extends State<TeachOrEditScreen> {
       },
     );
 
-    // If the user confirmed the action, proceed with the update
     if (confirm) {
       try {
         User? user = _auth.currentUser;
@@ -967,7 +960,6 @@ class _TeachOrEditScreenState extends State<TeachOrEditScreen> {
               'wantsToTeach': true,
             });
           } else {
-            // If wantsToTeach is false, delete all subjects and the TeachingSubjects subcollection
             await _firestore
                 .collection('Students')
                 .doc(userId)
@@ -993,7 +985,6 @@ class _TeachOrEditScreenState extends State<TeachOrEditScreen> {
         print('Error toggling wantsToTeach: $e');
       }
     } else {
-      // If the user canceled, revert the checkbox state
       setState(() {
         wantsToTeach = previousValue;
       });

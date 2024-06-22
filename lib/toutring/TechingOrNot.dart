@@ -83,7 +83,7 @@ class _TeachOrNotScreenState extends State<TeachOrNotScreen> {
                       major = null;
                       subjectsToTeach.clear();
                       departmentAndMajorSelected =
-                          false; // to make sure the user choose major && departmen
+                          false; 
                     });
                   },
                   items: categoryMap.keys.map((String value) {
@@ -102,7 +102,7 @@ class _TeachOrNotScreenState extends State<TeachOrNotScreen> {
                       major = newValue;
                       subjectsToTeach.clear();
                       departmentAndMajorSelected = Department != null &&
-                          major != null; // Check if both are selected
+                          major != null; 
                     });
                   },
                   items: getSubcategories().map((String value) {
@@ -176,21 +176,21 @@ class _TeachOrNotScreenState extends State<TeachOrNotScreen> {
                                           TextButton(
                                             onPressed: () {
                                               Navigator.pop(context,
-                                                  'Yes'); // Return 'Yes' as String
+                                                  'Yes'); 
                                             },
                                             child: Text('Yes'),
                                           ),
                                           TextButton(
                                             onPressed: () {
                                               Navigator.pop(context,
-                                                  'No'); // Return 'No' as String
+                                                  'No'); 
                                             },
                                             child: Text('No'),
                                           ),
                                           TextButton(
                                             onPressed: () {
                                               Navigator.pop(context,
-                                                  "I don't care"); // Return "I don't care" as String
+                                                  "I don't care"); 
                                             },
                                             child: Text("I don't care"),
                                           ),
@@ -279,8 +279,8 @@ class _TeachOrNotScreenState extends State<TeachOrNotScreen> {
       return categoryMap[Department!]![major!]!
           .map((subject) => {
                 'name': subject,
-                'price': 0, // default price
-                'preferOnline': 'No', // default preference
+                'price': 0, 
+                'preferOnline': 'No', 
               })
           .toList();
     }
@@ -293,25 +293,21 @@ class _TeachOrNotScreenState extends State<TeachOrNotScreen> {
       if (user != null) {
         String userId = user.uid;
 
-        // Fetch the user's gender
         DocumentSnapshot userDoc =
             await _firestore.collection('Students').doc(userId).get();
         String gender = userDoc['gender'];
 
-        // Determine the profile image URL based on the gender
         String profileImageUrl = gender == 'Male'
             ? 'https://i.pinimg.com/564x/22/ce/12/22ce126b77afdd24a5994ecb51736887.jpg'
             : 'https://i.pinimg.com/736x/8b/1f/9f/8b1f9f145889835124f968a6aa82b79f.jpg';
 
-        // Update the user's general information
         await _firestore.collection('Students').doc(userId).update({
           'wantsToTeach': wantsToTeach,
           'Department': Department,
           'major': major,
-          'profileImageUrl': profileImageUrl, // Add the profile image URL
+          'profileImageUrl': profileImageUrl, 
         });
 
-        // Create a subcollection for teaching subjects
         if (wantsToTeach) {
           CollectionReference teachingSubjectsRef = _firestore
               .collection('Students')
@@ -327,11 +323,9 @@ class _TeachOrNotScreenState extends State<TeachOrNotScreen> {
           }
         }
       } else {
-        // User is not signed in
         print('User is not signed in');
       }
     } catch (e) {
-      // Show error message
       print('Error saving information: $e');
     }
   }

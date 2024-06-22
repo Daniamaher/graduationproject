@@ -21,7 +21,7 @@ class _ResizableTextFieldState extends State<ResizableTextField> {
         onChanged: (text) {
           setState(() {});
         },
-        maxLines: null, // Allows for multiline input
+        maxLines: null, 
         decoration: InputDecoration.collapsed(hintText: "Enter text here"),
       ),
     );

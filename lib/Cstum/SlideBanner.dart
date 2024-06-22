@@ -23,7 +23,7 @@ class _SlideBannerState extends State<SlideBanner>
       duration: Duration(milliseconds: 600),
     );
     _offsetAnimation = Tween<Offset>(
-      begin: Offset(-1.0, 0.0), // Slide from left
+      begin: Offset(-1.0, 0.0), 
       end: Offset.zero,
     ).animate(
       CurvedAnimation(

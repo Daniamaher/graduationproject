@@ -186,12 +186,7 @@ class _DisplayHouseDetailPageState extends State<DisplayHouseDetailPage> {
               title: Text('Email: ${widget.houseDetails.email}'),
               onTap: () => _launchEmail(widget.houseDetails.email),
             ),
-/*
-             ListTile(
-              leading: Icon(Icons.check, color: kPrimaryColor),
-              title: Text('Available: ${widget.houseDetails.isAvailable ? 'Yes' : 'No'}'),
-            ),*/
-                 
+   
                   ListTile(
               leading: Icon(Icons.check, color: kPrimaryColor),
               title: Text('Available: ${widget.houseDetails.isAvailable ? 'Yes' : 'No'}'),
@@ -219,13 +214,8 @@ class _DisplayHouseDetailPageState extends State<DisplayHouseDetailPage> {
             SizedBox(height: 10),
 
            
-/*
 
-                      _buildInfoTile(Icons.check, 'Available: ${widget.houseDetails.isAvailable ? 'Yes' : 'No'}'),
-          _buildInfoTile(Icons.wifi, 'Free Internet: ${widget.houseDetails.hasFreeInternet ? 'Yes' : 'No'}'),
-                               _buildInfoTile(Icons.more, 'Additional details: ${widget.houseDetails.additionalDetails }'),
 
-                     _buildInfoTile(Icons.location_on_outlined, 'Location ${widget.houseDetails.location }'),*/
             Center(
               child: ElevatedButton(
                 onPressed: () {
@@ -409,59 +399,6 @@ class Review {
     };
   }
 }
-/*
-class HouseDetails {
-  final String houseId;
-  final String houseName;
-  final double housePrice;
-  final int occupants;
-  final int rooms;
-  final List<String> imageUrls;
-  final String gender;
-  final String email;
-  final String userId;
-  final int bathrooms;
-
-  HouseDetails({
-    required this.houseId,
-    required this.houseName,
-    required this.housePrice,
-    required this.occupants,
-    required this.rooms,
-    required this.imageUrls,
-    required this.gender,
-    required this.email,
-    required this.userId,
-    required this.bathrooms,
-  });
-
-  factory HouseDetails.defaultData() {
-    return HouseDetails(
-       userId: 'user123',
-          houseId: 'house123',
-          houseName: 'Lovely House',
-          housePrice: 1000,
-          rooms: 3,
-          bathrooms: 2,
-          gender: 'Any',
-          occupants: 4,
-          email: 'owner@example.com',
-          imageUrls: ['https://via.placeholder.com/150'],
-          latitude: 37.7749,
-          longitude: -122.4194,
-          location: 'San Francisco, CA',
-           isAvailable:true, // New field
-        hasFreeInternet:false,
-        additionalDetails:''
-
-
-
-    );
-  }
-}
-*/
-
-
 
 Widget _buildMap(double latitude, double longitude) {
     return Container(
