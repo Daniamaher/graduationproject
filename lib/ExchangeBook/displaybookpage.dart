@@ -483,6 +483,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/ExchangeBook/editbookpage.dart';
 import 'package:flutter_application_1/constant.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DisplayBookPage extends StatelessWidget {
  
@@ -648,7 +649,7 @@ class DisplayBookPage extends StatelessWidget {
                   padding: const EdgeInsets.all(20.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
+                    children: [/*
                       SizedBox(height: 20),
                       Text(
                         'Book Name: ${bookName ?? 'Not available'}',
@@ -660,10 +661,14 @@ class DisplayBookPage extends StatelessWidget {
                         style: TextStyle(fontSize: 18),
                       ),
                       SizedBox(height: 10),
-                      Text(
-                        'Email: ${email ?? 'Not available'}',
-                        style: TextStyle(fontSize: 18),
-                      ),
+   
+
+                              ListTile(
+              leading: Icon(Icons.email, color: kPrimaryColor),
+              title: Text('Email: ${email}'),
+              onTap: () => _launchEmail(email!),
+            ),
+
                       SizedBox(height: 10),
                       Text(
                         'Additional Details: ${additionalDetails ?? 'Not available'}',
@@ -674,7 +679,48 @@ class DisplayBookPage extends StatelessWidget {
                         'Book Status: ${bookStatus ?? 'Not available'}',
                         style: TextStyle(fontSize: 18),
                       ),
-                      SizedBox(height: 20),
+                      SizedBox(height: 20),*/
+
+
+                      ListTile(
+                        leading: Icon(Icons.book, color: kPrimaryColor),
+                        title: Text(
+                          'Book Name: ${bookName ?? 'Not available'}',
+                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      ListTile(
+                        leading: Icon(Icons.attach_money_sharp, color: kPrimaryColor),
+                        title: Text(
+                          'Price: ${bookPrice ?? 'Not available'}\$',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      ListTile(
+                        leading: Icon(Icons.email, color: kPrimaryColor),
+                        title: Text('Email: ${email ?? 'Not available'}'),
+                        onTap: email != null ? () => _launchEmail(email) : null,
+                      ),
+                      SizedBox(height: 10),
+                      ListTile(
+                        leading: Icon(Icons.more, color: kPrimaryColor),
+                        title: Text(
+                          'Additional Details: ${additionalDetails ?? 'Not available'}',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      ListTile(
+                        leading: Icon(Icons.check_circle, color: kPrimaryColor),
+                        title: Text(
+                          'Book Status: ${bookStatus ?? 'Not available'}',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                      ),
+                                            SizedBox(height: 20),
+
                       Text(
                         'Images:',
                         style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -706,4 +752,27 @@ class DisplayBookPage extends StatelessWidget {
       ),
     );
   }
+
+
+
+     Future<void> _launchEmail(String email) async {
+    final Uri emailLaunchUri = Uri(
+      scheme: 'mailto',
+      path: email,
+    );
+    if (await canLaunch(emailLaunchUri.toString())) {
+      await launch(emailLaunchUri.toString());
+    } else {
+      throw 'Could not launch email';
+    }
+  }
 }
+
+
+
+
+
+
+
+
+
